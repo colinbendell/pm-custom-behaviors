@@ -1,0 +1,13 @@
+<auth:browser.token>
+    <hmac-algo>SHA256</hmac-algo>
+    <escape-hmac-inputs>on</escape-hmac-inputs>
+    <verify>
+        <key>%(PMUSER_TOKENKEY)</key>
+        <url>%(AK_PATH)</url>
+        <token>%(PMUSER_TOKEN)</token>
+        <!--disable automatic error responses -->
+        <failure-response>off</failure-response>
+        <!--extract the result of this verification into CLDTOKEN_* variables -->
+        <variable-prefix>PMUSER_CLDTOKEN</variable-prefix>
+    </verify>
+</auth:browser.token>

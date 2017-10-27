@@ -1,0 +1,9 @@
+<edgeservices:processing­agent> 
+<status>on</status> 
+<log­r­line>on</log­r­line> 
+<url>%(PMUSER_IPA_PATH)</url>
+  <host>%(PMUSER_IPA_HOST)</host>
+<post­body></post­body> 
+<skip­on­previous­failure>off</skip­on­previous­failure>
+ <authenticate>off</authenticate> 
+</edgeservices:processing­agent>
