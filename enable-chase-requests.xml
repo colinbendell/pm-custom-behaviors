@@ -13,7 +13,7 @@
 	    </assign:variable>
     </match:response.status>
     <match:response.status value="300:399" result="true">
-    	<match:response.header value="Surrogate-Location">
+    	<match:response.header name="Surrogate-Location">
 		    <assign:extract-value>
 		        <location>Response_Header</location>
 		        <location-id>Surrogate-Location</location-id>
