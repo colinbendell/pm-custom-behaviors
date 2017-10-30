@@ -1,13 +1,13 @@
 <match:metadata-stage value="client-request">
-      <!-- By Default use AK_PATH as FSS base -->
+      <!-- By Default use AK_PATH as forward base -->
       <assign:variable>
-            <name>PMUSER_FSS_BASE</name>
+            <name>PMUSER_FWD_BASE</name>
             <value>%(AK_PATH)</value>
       </assign:variable>
       <!-- If path-modifications are executed in the config, use AKA_PM_OUTCOME_URL instead -->
       <match:variable name="AKA_PM_OUTCOME_URL" result="true">
             <assign:variable>
-                  <name>PMUSER_FSS_BASE</name>
+                  <name>PMUSER_FWD_BASE</name>
                   <value>%(AKA_PM_OUTCOME_URL)</value>
             </assign:variable>
       </match:variable>

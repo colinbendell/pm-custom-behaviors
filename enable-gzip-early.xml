@@ -1,0 +1,3 @@
+<match:response.header name="Content­-Type" value="text/* *xml *json *javascript *js" value-wildcard="*" value-case="off">
+	<edgeservices:lma.incoming>on</edgeservices:lma.incoming>
+</match:response.header>

@@ -1,0 +1,39 @@
+<match:processing-agent-response>
+	<match:response.header name="X-CLD-PEM">
+		<assign:extract-value>
+			<variable-name>PMUSER_IPA_PEM</variable-name>
+			<location>IPA_Response_Header</location>
+			<location-id>X-CLD-PEM</location-id>
+		</assign:extract-value>
+	</match:response.header>
+</match:processing-agent-response>
+<match:processing-agent-response>
+	<match:response.header name="X-CLD-HOST">
+		<assign:extract-value>
+			<variable-name>PMUSER_IPA_HOST</variable-name>
+			<location>IPA_Response_Header</location>
+			<location-id>X-CLD-HOST</location-id>
+		</assign:extract-value>
+	</match:response.header>
+</match:processing-agent-response>
+<match:processing-agent-response>
+	<match:response.header name="X-CLD-PATH">	
+		<assign:extract-value>
+			<variable-name>PMUSER_IPA_PATH</variable-name>
+			<location>IPA_Response_Header</location>
+			<location-id>X-CLD-PATH</location-id>
+		</assign:extract-value>
+	</match:response.header>
+</match:processing-agent-response>
+<match:processing-agent-response>
+	<match:response.header name="Server-Timing">
+		<assign:extract-value>
+			<variable-name>PMUSER_IPA_SERVERTIMING</variable-name>
+			<location>IPA_Response_Header</location>
+			<location-id>Server-Timing</location-id>
+		</assign:extract-value>		
+	</match:response.header>
+</match:processing-agent-response>
+
+
+

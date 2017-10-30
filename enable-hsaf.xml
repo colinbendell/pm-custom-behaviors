@@ -1,0 +1,35 @@
+<match:metadata-stage value="client-request">
+  <!-- Select the Forward Serial-->
+  <assign:variable>
+    <name>FSS_VALUE</name>
+    <value>%(PMUSER_FSS_BASE)</value>
+    <transform>
+      <hash>
+        <min>700</min>
+        <max>900</max>
+      </hash>
+    </transform>
+  </assign:variable>
+</match:metadata-stage>
+
+<!-- apply forward serial selection and use custom maps as t0 and t1 -->
+<forward:cache-parent>
+  <status>on</status>
+  <selection-method>domain-lookup</selection-method>
+  <policy>tiered-distribution</policy>
+  <tier>
+    <name>TD0</name>
+    <map>e%(FSS_VALUE).ccloudinary%(AK_CPCODE).i%(FSS_VALUE).t0.pweb.ggbl.oimg.fmd.pw.pattd.akamai.com</map>
+  </tier>
+  <tier>
+    <name>TD1</name>
+    <map>e%(FSS_VALUE).ccloudinary%(AK_CPCODE).i%(FSS_VALUE).t1.pweb.ggbl.oimg.fmd.pw.pattd.akamai.com</map>
+  </tier>
+  <tier-order>TD0 TD1 ORIGIN</tier-order>
+</forward:cache-parent>
+
+<!-- ByPass Property Manager TD -->
+<assign:variable>
+  <name>AKA_PM_BYPASS_TD</name>
+  <value>true</value>
+</assign:variable>

@@ -1,0 +1,79 @@
+<cache:honor-cc2.status>on</cache:honor-cc2.status>
+<cache:honor-cc2.use-directives.max-age>on</cache:honor-cc2.use-directives.max-age>
+<cache:honor-cc2.use-directives.no-cache>off</cache:honor-cc2.use-directives.no-cache>
+<cache:honor-cc2.use-directives.no-store>off</cache:honor-cc2.use-directives.no-store>
+<cache:honor-cc2.use-directives.no-transform>off</cache:honor-cc2.use-directives.no-transform>
+<cache:honor-cc2.use-directives.post-check>off</cache:honor-cc2.use-directives.post-check>
+<cache:honor-cc2.use-directives.pre-check>off</cache:honor-cc2.use-directives.pre-check>
+<cache:honor-cc2.use-directives.private>off</cache:honor-cc2.use-directives.private>
+<cache:honor-cc2.use-directives.proxy-revalidate>off</cache:honor-cc2.use-directives.proxy-revalidate>
+<cache:honor-cc2.use-directives.public>off</cache:honor-cc2.use-directives.public>
+<cache:honor-cc2.use-directives.s-maxage>on</cache:honor-cc2.use-directives.s-maxage>
+
+<match:variable name="PMUSER_HONORCC2" value="*max-age*" value-wildcarde="on">
+	<cache:honor-cc2.use-directives.max-age>on</cache:honor-cc2.use-directives.max-age>
+</match:variable>
+<match:variable name="PMUSER_HONORCC2" value="*must-revalidate*" value-wildcarde="on">
+	<cache:honor-cc2.use-directives.must-revalidate>on</cache:honor-cc2.use-directives.must-revalidate>
+</match:variable>
+<match:variable name="PMUSER_HONORCC2" value="*no-cache*" value-wildcarde="on">
+	<cache:honor-cc2.use-directives.no-cache>on</cache:honor-cc2.use-directives.no-cache>
+</match:variable>
+<match:variable name="PMUSER_HONORCC2" value="*no-store*" value-wildcarde="on">
+	<cache:honor-cc2.use-directives.no-store>on</cache:honor-cc2.use-directives.no-store>
+</match:variable>
+<match:variable name="PMUSER_HONORCC2" value="*no-transform*" value-wildcarde="on">
+	<cache:honor-cc2.use-directives.no-transform>on</cache:honor-cc2.use-directives.no-transform>
+</match:variable>
+<match:variable name="PMUSER_HONORCC2" value="*post-check*" value-wildcarde="on">
+	<cache:honor-cc2.use-directives.post-check>on</cache:honor-cc2.use-directives.post-check>
+</match:variable>
+<match:variable name="PMUSER_HONORCC2" value="*pre-check*" value-wildcarde="on">
+	<cache:honor-cc2.use-directives.pre-check>on</cache:honor-cc2.use-directives.pre-check>
+</match:variable>
+<match:variable name="PMUSER_HONORCC2" value="*private*" value-wildcarde="on">
+	<cache:honor-cc2.use-directives.private>on</cache:honor-cc2.use-directives.private>
+</match:variable>
+<match:variable name="PMUSER_HONORCC2" value="*proxy-revalidate*" value-wildcarde="on">
+	<cache:honor-cc2.use-directives.proxy-revalidate>on</cache:honor-cc2.use-directives.proxy-revalidate>
+</match:variable>
+<match:variable name="PMUSER_HONORCC2" value="*public*" value-wildcarde="on">
+	<cache:honor-cc2.use-directives.public>on</cache:honor-cc2.use-directives.public>
+</match:variable>
+<match:variable name="PMUSER_HONORCC2" value="*s-maxage*" value-wildcarde="on">
+	<cache:honor-cc2.use-directives.s-maxage>on</cache:honor-cc2.use-directives.s-maxage>
+</match:variable>
+
+<match:variable name="PMUSER_HONORCC2_OFF" value="*max-age*" value-wildcarde="on" result="false">
+	<cache:honor-cc2.use-directives.max-age>off</cache:honor-cc2.use-directives.max-age>
+</match:variable>
+<match:variable name="PMUSER_HONORCC2_OFF" value="*must-revalidate*" value-wildcarde="on" result="false">
+	<cache:honor-cc2.use-directives.must-revalidate>off</cache:honor-cc2.use-directives.must-revalidate>
+</match:variable>
+<match:variable name="PMUSER_HONORCC2_OFF" value="*no-cache*" value-wildcarde="on" result="false">
+	<cache:honor-cc2.use-directives.no-cache>off</cache:honor-cc2.use-directives.no-cache>
+</match:variable>
+<match:variable name="PMUSER_HONORCC2_OFF" value="*no-store*" value-wildcarde="on" result="false">
+	<cache:honor-cc2.use-directives.no-store>off</cache:honor-cc2.use-directives.no-store>
+</match:variable>
+<match:variable name="PMUSER_HONORCC2_OFF" value="*no-transform*" value-wildcarde="on" result="false">
+	<cache:honor-cc2.use-directives.no-transform>off</cache:honor-cc2.use-directives.no-transform>
+</match:variable>
+<match:variable name="PMUSER_HONORCC2_OFF" value="*post-check*" value-wildcarde="on" result="false">
+	<cache:honor-cc2.use-directives.post-check>off</cache:honor-cc2.use-directives.post-check>
+</match:variable>
+<match:variable name="PMUSER_HONORCC2_OFF" value="*pre-check*" value-wildcarde="on" result="false">
+	<cache:honor-cc2.use-directives.pre-check>off</cache:honor-cc2.use-directives.pre-check>
+</match:variable>
+<match:variable name="PMUSER_HONORCC2_OFF" value="*private*" value-wildcarde="on" result="false">
+	<cache:honor-cc2.use-directives.private>off</cache:honor-cc2.use-directives.private>
+</match:variable>
+<match:variable name="PMUSER_HONORCC2_OFF" value="*proxy-revalidate*" value-wildcarde="on" result="false">
+	<cache:honor-cc2.use-directives.proxy-revalidate>off</cache:honor-cc2.use-directives.proxy-revalidate>
+</match:variable>
+<match:variable name="PMUSER_HONORCC2_OFF" value="*public*" value-wildcarde="on" result="false">
+	<cache:honor-cc2.use-directives.public>off</cache:honor-cc2.use-directives.public>
+</match:variable>
+<match:variable name="PMUSER_HONORCC2_OFF" value="*s-maxage*" value-wildcarde="on" result="false">
+	<cache:honor-cc2.use-directives.s-maxage>off</cache:honor-cc2.use-directives.s-maxage>
+</match:variable>

@@ -1,0 +1,11 @@
+<assign:variable>
+	<name>PMUSER_EDGE</name>
+	<value>parent</value>
+</assign:variable>
+
+<match:request.type value="CLIENT_REQ">
+	<assign:variable>
+		<name>PMUSER_EDGE</name>
+		<value>edge</value>
+	</assign:variable>
+</match:request.type>

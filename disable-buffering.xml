@@ -1,0 +1,2 @@
+<network:http.buffer-response>off</network:http.buffer-response>
+<network:http.buffer-response-v2>off</network:http.buffer-response-v2>
