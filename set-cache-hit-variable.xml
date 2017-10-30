@@ -17,8 +17,8 @@
 		<value>1</value>
 	</assign:variable>
 	<match:response.cacheability value="cacheable" result="true">
-		<match:variable name="PMUSER_CACHE_STATE" value="*d* *i* *m* *g* *n*" value-wildcarde="on">
-			<match:variable name="PMUSER_CACHE_STATE" value="*o* *p*" value-wildcarde="on" result="false">
+		<match:variable name="PMUSER_CACHE_STATE" value="*d* *i* *m* *g* *n*" value-wildcard="on">
+			<match:variable name="PMUSER_CACHE_STATE" value="*o* *p*" value-wildcard="on" result="false">
 				<assign:variable>
 					<name>PMUSER_CACHE_HIT</name>
 					<value>1</value>
