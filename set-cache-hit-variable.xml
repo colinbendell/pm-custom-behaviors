@@ -2,39 +2,39 @@
 <match:metadata-stage value="client-response">
 	<assign:variable>
 		<name>PMUSER_CACHE_STATE</name>
-		<value>$(AK_CONTENT_SOURCE)</value>
+		<value>%(AK_CONTENT_SOURCE)</value>
 	</assign:variable>
 	<assign:variable>
-		<name>PMUSER_CACHE_HIT</name>
+		<name>PMUSER_IS_CACHE_HIT</name>
 		<value>0</value>
 	</assign:variable>
 	<assign:variable>
-		<name>PMUSER_CACHE_MISS</name>
+		<name>PMUSER_IS_CACHE_MISS</name>
 		<value>0</value>
 	</assign:variable>
 	<assign:variable>
-		<name>PMUSER_CACHE_NOSTORE</name>
+		<name>PMUSER_IS_NOSTORE</name>
 		<value>1</value>
 	</assign:variable>
 	<match:response.cacheability value="cacheable" result="true">
 		<match:variable name="PMUSER_CACHE_STATE" value="*d* *i* *m* *g* *n*" value-wildcard="on">
 			<match:variable name="PMUSER_CACHE_STATE" value="*o* *p*" value-wildcard="on" result="false">
 				<assign:variable>
-					<name>PMUSER_CACHE_HIT</name>
+					<name>PMUSER_IS_CACHE_HIT</name>
 					<value>1</value>
 				</assign:variable>
 				<assign:variable>
-					<name>PMUSER_CACHE_NOSTORE</name>
+					<name>PMUSER_IS_NOSTORE</name>
 					<value>0</value>
 				</assign:variable>
 			</match:variable>
-			<match:variable name="PMUSER_CACHE_HIT" value="0">
+			<match:variable name="PMUSER_IS_CACHE_HIT" value="0">
 				<assign:variable>
-					<name>PMUSER_CACHE_MISS</name>
+					<name>PMUSER_IS_CACHE_MISS</name>
 					<value>1</value>
 				</assign:variable>
 				<assign:variable>
-					<name>PMUSER_CACHE_NOSTORE</name>
+					<name>PMUSER_IS_NOSTORE</name>
 					<value>0</value>
 				</assign:variable>
 			</match:variable>
