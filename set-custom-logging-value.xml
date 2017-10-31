@@ -1,0 +1,6 @@
+<match:metadata-stage value="client-response">
+    <assign:variable>
+        <name>PMUSER_CUSTOM_LOG_VALUE</name>
+        <value>%(AK_CLIENT_RTT);%(AK_TRUE_CLIENT_PORT);%(AK_CONTENT_SOURCE);%(PMUSER_REMOTE_CACHE_STATE);%(AK_CLIENT_REQUEST_END_TIME);%(AK_CLIENT_TURNAROUND_TIME);%(AK_GHOST_IP);%(AK_REQUEST_ID);%(PMUSER_CUSTOM_LOG_VALUE)</value>
+    </assign:variable>
+</match:metadata-stage>
