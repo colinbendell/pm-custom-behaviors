@@ -1,0 +1,20 @@
+<match:metadata-stage value="client-done">
+    <match:variable name="PMUSER_CUSTOM_LOG_VALUE">
+        <assign:variable>
+            <name>PMUSER_CUSTOM_LOG_VALUE_TMP</name>
+            <value>%(PMUSER_CUSTOMLOG)</value>
+            <hidden>on</hidden>
+            <transform>
+                <substring>
+                    <start>0</start>
+                    <end>40</end>
+                </substring>
+            </transform>
+        </assign:variable>
+        <reporting:lds>
+            <custom-field>%(PMUSER_CUSTOM_LOG_VALUE_TMP)</custom-field>
+            <host>on</host>
+            <referer>on</referer>
+        </reporting:lds>
+    </match:variable>
+</match:metadata-stage>
