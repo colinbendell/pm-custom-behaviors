@@ -12,11 +12,12 @@ function getCustomBehaviorSrc(name, path, description = "") {
 
 function createCustomBehavior(name, path) {
 	return getCustomBehaviorSrc(name, path)
-        .then(behaviorSrc => { return fetch(`https://control.akamai.com/papi/v0/custom-behaviors`,
+        .then(behaviorSrc => {
+            return fetch(`https://control.akamai.com/papi/v0/custom-behaviors`,
             {
                 method: 'POST',
                 credentials: "same-origin",
-                body: behaviorSrc,
+                body: JSON.stringify(behaviorSrc),
                 headers: new Headers({"Content-Type": "application/json",
                     "PAPI-Use-Prefixes": "false"})
             })
