@@ -2,7 +2,7 @@ function getCustomBehaviorSrc(name, path, description = "") {
 	return fetch(path)
 	.then(response => response.text())
 	.then(xml => {return {
-		"description":description,
+		"description":description || name, // work around LUNA bug that both requires description but cannot be empty
 		"name":name,
 		"sharingLevel": "ACCOUNT",
 		"xml": xml,
