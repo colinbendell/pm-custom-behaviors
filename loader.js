@@ -2,7 +2,7 @@ function getCustomBehaviorSrc(name, path, description = "") {
 	return fetch(path)
 	.then(response => response.text())
 	.then(xml => {return {
-		"description":description || name, // bug in Luna that requires a description but it can't be empty.
+		"description":description,
 		"name":name,
 		"sharingLevel": "ACCOUNT",
 		"xml": xml,
@@ -29,7 +29,7 @@ function filterExistingBehaviors(behaviors) {
         .then(response => response.json())
         .then(data => {
             for (const existingBehavior of data.customBehaviors.items) {
-                behaviors.delete(displayName);
+                behaviors.delete(existingBehavior.name);
             }
             return behaviors;
         })
