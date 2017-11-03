@@ -48,13 +48,20 @@
 			<edge-only>off</edge-only>
 		</edgeservices:modify-outgoing-response.add-header>
 	</match:request.type>
+	<match:response.header name="X-Remote-Cache-State">
+		<assign:extract-value>
+			<variable-name>PMUSER_REMOTE_CACHE_STATE</variable-name>
+			<location>Response_Header</location>
+			<location-id>X-Remote-Cache-State</location-id>
+		</assign:extract-value>
+	</match:response.header>
 	<match:request.type result="true" value="CLIENT_REQ">
 		<match:response.header name="X-Remote-Cache-State">
-			<assign:extract-value>
-				<variable-name>PMUSER_REMOTE_CACHE_STATE</variable-name>
-				<location>Client_Response_Header</location>
-				<location-id>X-Remote-Cache-State</location-id>
-			</assign:extract-value>
+			<edgeservices:modify-outgoing-response.remove-header>
+				<name>X-Remote-Cache-State</name>
+				<status>on</status>
+				<edge-only>off</edge-only>
+			</edgeservices:modify-outgoing-response.remove-header>
 		</match:response.header>
 	</match:request.type>
 
