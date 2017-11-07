@@ -3,12 +3,14 @@
       <assign:variable>
             <name>PMUSER_FWD_BASE</name>
             <value>%(AK_PATH)</value>
+            <hidden>on</hidden>
       </assign:variable>
       <!-- If path-modifications are executed in the config, use AKA_PM_OUTCOME_URL instead -->
       <match:variable name="AKA_PM_OUTCOME_URL" result="true">
             <assign:variable>
                   <name>PMUSER_FWD_BASE</name>
                   <value>%(AKA_PM_OUTCOME_URL)</value>
+                  <hidden>on</hidden>
             </assign:variable>
       </match:variable>
 </match:metadata-stage>
