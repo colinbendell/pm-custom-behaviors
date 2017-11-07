@@ -1,37 +1,48 @@
 <match:processing-agent-response>
-	<match:response.header name="X-CLD-PEM">
+	<match:response.header name="X-IPA-PEM">
 		<assign:extract-value>
 			<variable-name>PMUSER_IPA_PEM</variable-name>
 			<location>IPA_Response_Header</location>
-			<location-id>X-CLD-PEM</location-id>
+			<location-id>X-IPA-PEM</location-id>
 		</assign:extract-value>
 	</match:response.header>
-</match:processing-agent-response>
-<match:processing-agent-response>
-	<match:response.header name="X-CLD-HOST">
+	<match:response.header name="X-IPA-HOST">
 		<assign:extract-value>
 			<variable-name>PMUSER_IPA_HOST</variable-name>
 			<location>IPA_Response_Header</location>
-			<location-id>X-CLD-HOST</location-id>
+			<location-id>X-IPA-HOST</location-id>
 		</assign:extract-value>
 	</match:response.header>
-</match:processing-agent-response>
-<match:processing-agent-response>
-	<match:response.header name="X-CLD-PATH">	
+	<match:response.header name="X-IPA-PATH">
 		<assign:extract-value>
 			<variable-name>PMUSER_IPA_PATH</variable-name>
 			<location>IPA_Response_Header</location>
-			<location-id>X-CLD-PATH</location-id>
+			<location-id>X-IPA-PATH</location-id>
 		</assign:extract-value>
 	</match:response.header>
-</match:processing-agent-response>
-<match:processing-agent-response>
 	<match:response.header name="Server-Timing">
 		<assign:extract-value>
 			<variable-name>PMUSER_IPA_SERVERTIMING</variable-name>
 			<location>IPA_Response_Header</location>
 			<location-id>Server-Timing</location-id>
-		</assign:extract-value>		
+		</assign:extract-value>
+		<assign:variable>
+			<name>PMUSER_SERVERTIMING</name>
+			<value>%(PMUSER_IPA_SERVERTIMING);%(PMUSER_SERVERTIMING)</value>
+			<hidden>on</hidden>
+		</assign:variable>
+	</match:response.header>
+	<match:response.header name="X-Log-Value">
+		<assign:extract-value>
+			<variable-name>PMUSER_IPA_LOG_VALUE</variable-name>
+			<location>IPA_Response_Header</location>
+			<location-id>X-Log-Value</location-id>
+		</assign:extract-value>
+		<assign:variable>
+			<name>PMUSER_CUSTOM_LOG_VALUE</name>
+			<value>%(PMUSER_CUSTOM_LOG_VALUE);%(PMUSER_IPA_LOG_VALUE)</value>
+			<hidden>on</hidden>
+		</assign:variable>
 	</match:response.header>
 </match:processing-agent-response>
 
