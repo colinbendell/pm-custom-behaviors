@@ -1,6 +1,49 @@
 <match:metadata-stage value="client-response">
     <assign:variable>
+        <name>TMP_LOG_PROTO</name>
+        <value>h1</value>
+        <hidden>on</hidden>
+    </assign:variable>
+    <assign:variable>
+        <name>TMP_LOG_SNI</name>
+        <value>-</value>
+        <hidden>on</hidden>
+    </assign:variable>
+
+    <match:request.protocol value="HTTPS">
+        <assign:variable>
+            <name>TMP_LOG_PROTO</name>
+            <value>tls</value>
+            <hidden>on</hidden>
+        </assign:variable>
+
+        <match:variable name="AK_PROTOCOL_NEGOTIATION" value="http2">
+            <assign:variable>
+                <name>TMP_LOG_PROTO</name>
+                <value>h2</value>
+                <hidden>on</hidden>
+            </assign:variable>
+        </match:variable>
+        <match:variable name="AK_TLS_SNI_NAME" value="EMPTY_STRING" result="false">
+            <assign:variable>
+                <name>TMP_LOG_SNI</name>
+                <value>sni</value>
+                <hidden>on</hidden>
+            </assign:variable>
+        </match:variable>
+    </match:request.protocol>
+
+    <match:variable name="PMUSER_CUSTOM_LOG_VALUE">
+        <assign:variable>
+            <name>PMUSER_CUSTOM_LOG_VALUE</name>
+            <value>%(PMUSER_CUSTOM_LOG_VALUE);</value>
+            <hidden>on</hidden>
+        </assign:variable>
+    </match:variable>
+
+    <assign:variable>
         <name>PMUSER_CUSTOM_LOG_VALUE</name>
-        <value>%(PMUSER_CUSTOM_LOG_VALUE);%(AK_CLIENT_RTT);%(AK_TRUE_CLIENT_PORT);%(AK_CONTENT_SOURCE);%(PMUSER_REMOTE_CACHE_STATE);%(AK_CLIENT_TURNAROUND_TIME);%(AK_REQUEST_ID);%(AK_GHOST_IP)</value>
+        <value>%(PMUSER_CUSTOM_LOG_VALUE)%(AK_CLIENT_RTT);%(TMP_LOG_PROTO);%(TMP_LOG_SNI);%(AK_TRUE_CLIENT_PORT);%(AK_CONTENT_SOURCE);%(PMUSER_REMOTE_CACHE_STATE);%(AK_CLIENT_TURNAROUND_TIME);%(AK_REQUEST_ID);%(AK_GHOST_IP)</value>
+        <hidden>on</hidden>
     </assign:variable>
 </match:metadata-stage>
