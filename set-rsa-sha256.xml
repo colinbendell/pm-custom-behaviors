@@ -1,0 +1,16 @@
+<assign:variable>
+    <name>PMUSER_VERIFY</name>
+    <value>%(PMUSER_VERIFY)</value>
+    <hidden>off</hidden>
+    <sensitive>off</sensitive>
+    <transform>
+        <verify>
+            <data>%(PMUSER_DATA)</data>
+            <max-data-size>640KB</max-data-size>
+            <pubkey>%(PMUSER_PEM)</pubkey>
+            <signature>%(PMUSER_SIGNATURE)</signature>
+            <algorithm>RSA</algorithm>
+            <hash>sha256</hash>
+        </verify>
+    </transform>
+</assign:variable>
