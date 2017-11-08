@@ -27,9 +27,7 @@
 		    </assign:variable>
 		</match:response.header>
     </match:response.status>
-</match:metadata-stage>
 
-<match:metadata-stage value="client-response">
 	<match:variable name="PMUSER_REDIRECT_DEST">
 	    <forward:availability.fail-action2>
 	        <status>on</status>

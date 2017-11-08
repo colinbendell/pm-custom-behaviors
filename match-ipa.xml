@@ -45,6 +45,3 @@
 		</assign:variable>
 	</match:response.header>
 </match:processing-agent-response>
-
-
-

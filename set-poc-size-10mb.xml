@@ -1,3 +1,4 @@
 <cache:poc2>
+    <status>on</status>
     <fragment-size>10MB</fragment-size>
 </cache:poc2>

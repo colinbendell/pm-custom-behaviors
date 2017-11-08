@@ -1,0 +1,2 @@
+<security:ssl.force-forward-protocol>HTTPS</security:ssl.force-forward-protocol>
+<forward:origin-server.port>443</forward:origin-server.port>
