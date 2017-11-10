@@ -1,8 +1,2 @@
-<match:request.protocol value="HTTP">
-	<!-- Apply cache key sharing -->
-	<cache:key.ssl.share-http-key.share>on</cache:key.ssl.share-http-key.share>
-</match:request.protocol>
-<match:request.protocol value="HTTPS">
-	<cache:key.ssl.share-http-key.share>on</cache:key.ssl.share-http-key.share>
-	<cache:key.ssl.share-http-key.remove-http>on</cache:key.ssl.share-http-key.remove-http>
-</match:request.protocol>
+<security:ssl.force-forward-protocol>HTTPS</security:ssl.force-forward-protocol>
+<forward:origin-server.port>443</forward:origin-server.port>
