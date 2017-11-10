@@ -23,13 +23,6 @@
                 <hidden>on</hidden>
             </assign:variable>
         </match:variable>
-        <match:variable name="TMP_LOG_SNI" value="sni" result="false">
-            <assign:variable>
-                <name>TMP_LOG_SNI</name>
-                <value>sni</value>
-                <hidden>on</hidden>
-            </assign:variable>
-        </match:variable>
 
         <assign:variable>
             <name>TMP_LOG_PROTO</name>
@@ -45,10 +38,32 @@
             </assign:variable>
         </match:variable>
     </match:request.protocol>
+    <match:response.header name="X-Request-ID">
+        <assign:extract-value>
+            <variable-name>TMP_LOG_REQUESTID</variable-name>
+            <location>Response_Header</location>
+            <location-id>X-Request-ID</location-id>
+        </assign:extract-value>
+        <assign:variable>
+            <name>PMUSER_LOG_REQUESTID</name>
+            <value>%(TMP_LOG_REQUESTID)</value>
+            <hidden>on</hidden>
+        </assign:variable>
+    </match:response.header>
 
+    <!-- Custom Logging is limitted to 40 characters -->
+    <!-- Worst case: RTT: 4, SNI: 4; PROTO: 2; PORT: 5; CACHE: 1; CACHE-REMOTE: 1; TTFB: 4; X-Req: 8; X-Akam-Req: 16; Ghost IP: 15 -->
+    <!-- Likely case: RTT: 3, SNI: 0; PROTO: 2; PORT: 5; CACHE: 1; CACHE-REMOTE: 1; TTFB: 3; X-Req: 8; X-Akam-Req: 16; Ghost IP: 15 -->
     <assign:variable>
         <name>PMUSER_CUSTOM_LOG_VALUE</name>
-        <value>%(PMUSER_CUSTOM_LOG_VALUE)%(AK_CLIENT_RTT);%(TMP_LOG_PROTO);%(TMP_LOG_SNI);%(AK_TRUE_CLIENT_PORT);%(AK_CONTENT_SOURCE);%(PMUSER_REMOTE_CACHE_STATE);%(AK_CLIENT_TURNAROUND_TIME);%(AK_REQUEST_ID);%(AK_GHOST_IP)</value>
+        <value>%(PMUSER_CUSTOM_LOG_VALUE)%(AK_CLIENT_RTT)%(TMP_LOG_PROTO)%(TMP_LOG_SNI)%(AK_TRUE_CLIENT_PORT)%(AK_CONTENT_SOURCE)%(AK_CLIENT_TURNAROUND_TIME)%(PMUSER_REMOTE_CACHE_STATE)%(PMUSER_LOG_REQUESTID)%(AK_REQUEST_ID)%(AK_GHOST_IP)</value>
         <hidden>on</hidden>
     </assign:variable>
+    <match:variable name="PMUSER_LOG_IS_DELIMITED" value="1 on true">
+        <assign:variable>
+            <name>PMUSER_CUSTOM_LOG_VALUE</name>
+            <value>%(PMUSER_CUSTOM_LOG_VALUE)%(AK_CLIENT_RTT);%(TMP_LOG_PROTO);%(TMP_LOG_SNI);%(AK_TRUE_CLIENT_PORT);%(AK_CONTENT_SOURCE);%(AK_CLIENT_TURNAROUND_TIME);%(PMUSER_REMOTE_CACHE_STATE);%(PMUSER_LOG_REQUESTID);%(AK_REQUEST_ID);%(AK_GHOST_IP)</value>
+            <hidden>on</hidden>
+        </assign:variable>
+    </match:variable>
 </match:metadata-stage>
