@@ -6,11 +6,31 @@
     </assign:variable>
     <assign:variable>
         <name>TMP_LOG_SNI</name>
-        <value>-</value>
+        <value></value>
         <hidden>on</hidden>
     </assign:variable>
 
     <match:request.protocol value="HTTPS">
+        <assign:variable>
+            <name>TMP_LOG_SNI</name>
+            <value>%(AK_TLS_CIPHER_NAME)</value>
+            <hidden>on</hidden>
+        </assign:variable>
+        <match:variable name="AK_TLS_SNI_NAME" value="EMPTY_STRING" result="false">
+            <assign:variable>
+                <name>TMP_LOG_SNI</name>
+                <value></value>
+                <hidden>on</hidden>
+            </assign:variable>
+        </match:variable>
+        <match:variable name="TMP_LOG_SNI" value="sni" result="false">
+            <assign:variable>
+                <name>TMP_LOG_SNI</name>
+                <value>sni</value>
+                <hidden>on</hidden>
+            </assign:variable>
+        </match:variable>
+
         <assign:variable>
             <name>TMP_LOG_PROTO</name>
             <value>tls</value>
@@ -21,13 +41,6 @@
             <assign:variable>
                 <name>TMP_LOG_PROTO</name>
                 <value>h2</value>
-                <hidden>on</hidden>
-            </assign:variable>
-        </match:variable>
-        <match:variable name="AK_TLS_SNI_NAME" value="EMPTY_STRING" result="false">
-            <assign:variable>
-                <name>TMP_LOG_SNI</name>
-                <value>sni</value>
                 <hidden>on</hidden>
             </assign:variable>
         </match:variable>
