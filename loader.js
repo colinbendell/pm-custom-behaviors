@@ -5,7 +5,7 @@ function getCustomBehaviorSrc(name, path, description = "") {
 		"description":description || name, // work around LUNA bug that both requires description but cannot be empty
 		"name":name,
 		"sharingLevel": "ACCOUNT",
-		"xml": xml,
+		"xml": xml.trim().replace(/\n|\r/g, ""),
 		"approvedByUser": "ftl"
 	}});
 }
