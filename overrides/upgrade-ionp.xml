@@ -1,0 +1,3 @@
+<akamai:call-template name="TCP_OPTIMIZATION">
+    <with-param name="TCP_OPT_LEVEL" value="high"/>
+</akamai:call-template>
