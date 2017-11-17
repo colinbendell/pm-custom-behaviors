@@ -1,4 +1,4 @@
-function getCustomBehaviorSrc(name, path, description = "") {
+function getBehaviorSrc(name, path, description = "") {
 	return fetch(path)
 	.then(response => response.text())
 	.then(xml => {return {
@@ -10,12 +10,11 @@ function getCustomBehaviorSrc(name, path, description = "") {
 	}});
 }
 
-function createCustomBehavior(name, path, isCustomOverride = false) {
-	return getCustomBehaviorSrc(name, path)
+function createBehavior(name, path, asCustomOverride = false) {
+	return getBehaviorSrc(name, path)
         .then(behaviorSrc => {
-            let url = `https://control.akamai.com/papi/v0/custom-behaviors`;
-            if (isCustomOverride) url = `https://control.akamai.com/papi/v0/custom-overrides`;
-            return fetch(url,
+            let apiPrefix = asCustomOverride ? "custom-overrides" : "custom-behaviors";
+            return fetch(`https://control.akamai.com/papi/v0/${apiPrefix}`,
             {
                 method: 'POST',
                 credentials: "same-origin",
@@ -26,11 +25,10 @@ function createCustomBehavior(name, path, isCustomOverride = false) {
     	});
 }
 
-function deleteCustomBehavior(behavior, isCustomOverride = false) {
-    let url = `https://control.akamai.com/papi/v0/custom-behaviors/${behavior.behaviorId}`;
-    if (isCustomOverride) url = `https://control.akamai.com/papi/v0/custom-overrides/${behavior.behaviorId}`;
+function deleteBehavior(behavior, asCustomOverride = false) {
+    let apiPrefix = asCustomOverride ? "custom-overrides" : "custom-behaviors";
 
-    return fetch(url,
+    return fetch(`https://control.akamai.com/papi/v0/${apiPrefix}/${behavior.behaviorId}`,
         {
             method: 'DELETE',
             credentials: "same-origin",
@@ -38,29 +36,27 @@ function deleteCustomBehavior(behavior, isCustomOverride = false) {
         })
 }
 
-function excludeExistingBehaviors(behaviors, isCustomOverride = false) {
-    let url = `https://control.akamai.com/papi/v0/custom-behaviors`;
-    if (isCustomOverride) url = `https://control.akamai.com/papi/v0/custom-overrides`;
-    return fetch(url, {credentials: "same-origin"})
+function excludeExistingBehaviors(behaviors, asCustomOverride = false) {
+    let apiPrefix = asCustomOverride ? "custom-overrides" : "custom-behaviors";
+
+    return fetch(`https://control.akamai.com/papi/v0/${apiPrefix}`, {credentials: "same-origin"})
         .then(response => response.json())
         .then(data => {
-            if (isCustomOverride) data.customBehaviors = data.customOverrides;
-            for (const existingBehavior of data.customBehaviors.items) {
+            for (const existingBehavior of (data.customBehaviors || data.customOverrides).items) {
                 behaviors.delete(existingBehavior.name);
             }
             return behaviors;
         })
 }
 
-function matchExistingBehaviors(behaviors, isCustomOverride = false) {
-    let url = `https://control.akamai.com/papi/v0/custom-behaviors`;
-    if (isCustomOverride) url = `https://control.akamai.com/papi/v0/custom-overrides`;
-    return fetch(url, {credentials: "same-origin"})
+function matchExistingBehaviors(behaviors, asCustomOverride = false) {
+    let apiPrefix = asCustomOverride ? "custom-overrides" : "custom-behaviors";
+
+    return fetch(`https://control.akamai.com/papi/v0/${apiPrefix}`, {credentials: "same-origin"})
         .then(response => response.json())
         .then(data => {
             let existingBehaviors = [];
-            if (isCustomOverride) data.customBehaviors = data.customOverrides;
-            for (const existingBehavior of data.customBehaviors.items) {
+            for (const existingBehavior of (data.customBehaviors || data.customOverrides).items) {
                 if (behaviors.has(existingBehavior.name))
                     existingBehaviors.push(existingBehavior);
             }
@@ -68,11 +64,10 @@ function matchExistingBehaviors(behaviors, isCustomOverride = false) {
         })
 }
 
-function createAllCustomBehaviors(isCustomOverride = false) {
-    let url = `https://api.github.com/repos/colinbendell/pm-custom-behaviors/contents`;
-    if (isCustomOverride) url = `https://api.github.com/repos/colinbendell/pm-custom-behaviors/contents/overrides`;
+function createAllCustomBehaviors(asCustomOverride = false) {
+    let apiPrefix = asCustomOverride ? "/overrides" : "";
 
-    return fetch(url)
+    return fetch(`https://api.github.com/repos/colinbendell/pm-custom-behaviors/contents${apiPrefix}`)
         .then(response => response.json())
         .then(data => {
             let behaviorList = new Map();
@@ -82,15 +77,14 @@ function createAllCustomBehaviors(isCustomOverride = false) {
             });
             return behaviorList;
         })
-        .then(behaviors => excludeExistingBehaviors(behaviors, isCustomOverride))
-        .then(behaviors => Promise.all([...behaviors].map(val => {createCustomBehavior(val[0], val[1], isCustomOverride)})));
+        .then(behaviors => excludeExistingBehaviors(behaviors, asCustomOverride))
+        .then(behaviors => Promise.all([...behaviors].map(val => {createBehavior(val[0], val[1], asCustomOverride)})));
 }
 
-function deleteAllCustomBehaviors(isCustomOverride = false) {
-    let url = `https://api.github.com/repos/colinbendell/pm-custom-behaviors/contents/deprecated`;
-    if (isCustomOverride) url = `https://api.github.com/repos/colinbendell/pm-custom-behaviors/contents/overrides/deprecated`;
+function deleteAllCustomBehaviors(asCustomOverride = false) {
+    let apiPrefix = asCustomOverride ? "/overrides" : "";
 
-    return fetch(url)
+    return fetch(`https://api.github.com/repos/colinbendell/pm-custom-behaviors/contents${apiPrefix}/deprecated`)
         .then(response => response.json())
         .then(data => {
             let behaviorSet = new Set();
@@ -101,8 +95,8 @@ function deleteAllCustomBehaviors(isCustomOverride = false) {
             });
             return behaviorSet;
         })
-        .then(behaviors => matchExistingBehaviors(behaviors, isCustomOverride))
-        .then(behaviors => Promise.all(behaviors.map(o => {deleteCustomBehavior(o, isCustomOverride)})));
+        .then(behaviors => matchExistingBehaviors(behaviors, asCustomOverride))
+        .then(behaviors => Promise.all(behaviors.map(o => {deleteBehavior(o, asCustomOverride)})));
 }
 
 function main() {
