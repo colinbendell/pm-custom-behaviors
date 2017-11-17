@@ -1,4 +1,19 @@
 <match:metadata-stage value="client-request">
+    <match:variable name="PMUSER_SERVERTIMING_DESC_NAME" result="false">
+        <assign:variable>
+            <name>PMUSER_SERVERTIMING_DESC_NAME</name>
+            <value>desc</value>
+            <hidden>on</hidden>
+        </assign:variable>
+    </match:variable>
+    <match:variable name="PMUSER_SERVERTIMING_DUR_NAME" result="false">
+        <assign:variable>
+            <name>PMUSER_SERVERTIMING_DESC_NAME</name>
+            <value>dur</value>
+            <hidden>on</hidden>
+        </assign:variable>
+    </match:variable>
+
     <assign:variable>
         <name>PMUSER_SERVERTIMING_START</name>
         <value>%(AK_CURRENT_TIME)</value>
@@ -81,7 +96,7 @@
     </match:variable>
     <assign:variable>
         <name>PMUSER_SERVERTIMING_DESC</name>
-        <value>%(PMUSER_SERVERTIMING_DESC)+rtt=%(AK_CLIENT_RTT)+id=%(AK_REQUEST_ID)</value>
+        <value>%(PMUSER_SERVERTIMING_DESC)+rtt_%(AK_CLIENT_RTT)+id_%(AK_REQUEST_ID)</value>
         <hidden>on</hidden>
     </assign:variable>
 
@@ -142,7 +157,7 @@
 
     <assign:variable>
         <name>PMUSER_SERVERTIMING</name>
-        <value>%(PMUSER_SERVERTIMING)cdn;dur=%(ST_DURATION);start=%(PMUSER_SERVERTIMING_START);total=%(ST_TOTAL);desc=%(PMUSER_SERVERTIMING_DESC)</value>
+        <value>%(PMUSER_SERVERTIMING)cdn;%(PMUSER_SERVERTIMING_DUR_NAME)=%(ST_DURATION);start=%(PMUSER_SERVERTIMING_START);total=%(ST_TOTAL);%(PMUSER_SERVERTIMING_DESC_NAME)="%(PMUSER_SERVERTIMING_DESC)"</value>
         <hidden>on</hidden>
     </assign:variable>
     <edgeservices:modify-outgoing-response.add-header>
