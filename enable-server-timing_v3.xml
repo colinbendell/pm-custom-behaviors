@@ -8,7 +8,7 @@
     </match:variable>
     <match:variable name="PMUSER_SERVERTIMING_DUR_NAME" result="false">
         <assign:variable>
-            <name>PMUSER_SERVERTIMING_DESC_NAME</name>
+            <name>PMUSER_SERVERTIMING_DUR_NAME</name>
             <value>dur</value>
             <hidden>on</hidden>
         </assign:variable>
