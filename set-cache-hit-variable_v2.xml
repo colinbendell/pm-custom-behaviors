@@ -17,28 +17,24 @@
 		<value>1</value>
 	</assign:variable>
 	<match:response.cacheability value="cacheable" result="true">
+		<assign:variable>
+			<name>PMUSER_IS_NOSTORE</name>
+			<value>0</value>
+		</assign:variable>
 		<match:variable name="PMUSER_CACHE_STATE" value="*d* *i* *m* *g* *n*" value-wildcard="on">
 			<match:variable name="PMUSER_CACHE_STATE" value="*o* *p*" value-wildcard="on" result="false">
 				<assign:variable>
 					<name>PMUSER_IS_CACHE_HIT</name>
 					<value>1</value>
 				</assign:variable>
-				<assign:variable>
-					<name>PMUSER_IS_NOSTORE</name>
-					<value>0</value>
-				</assign:variable>
 			</match:variable>
-			<match:variable name="PMUSER_IS_CACHE_HIT" value="0">
-				<assign:variable>
-					<name>PMUSER_IS_CACHE_MISS</name>
-					<value>1</value>
-				</assign:variable>
-				<assign:variable>
-					<name>PMUSER_IS_NOSTORE</name>
-					<value>0</value>
-				</assign:variable>
-			</match:variable>
-		</match:variable>		
+		</match:variable>
+		<match:variable name="PMUSER_IS_CACHE_HIT" value="0">
+			<assign:variable>
+				<name>PMUSER_IS_CACHE_MISS</name>
+				<value>1</value>
+			</assign:variable>
+		</match:variable>
 	</match:response.cacheability>
 	<match:request.type result="false" value="CLIENT_REQ">
 		<edgeservices:modify-outgoing-response.add-header>

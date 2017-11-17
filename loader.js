@@ -5,7 +5,7 @@ function getCustomBehaviorSrc(name, path, description = "") {
 		"description":description || name, // work around LUNA bug that both requires description but cannot be empty
 		"name":name,
 		"sharingLevel": "ACCOUNT",
-		"xml": xml.trim().replace(/\n|\r/g, ""),
+		"xml": xml.trim(),
 		"approvedByUser": "ftl"
 	}});
 }
@@ -34,8 +34,7 @@ function deleteCustomBehavior(behavior, isCustomOverride = false) {
         {
             method: 'DELETE',
             credentials: "same-origin",
-            headers: new Headers({"Content-Type": "application/json",
-                "PAPI-Use-Prefixes": "false"})
+            headers: new Headers({"PAPI-Use-Prefixes": "false"})
         })
 }
 
@@ -45,6 +44,7 @@ function excludeExistingBehaviors(behaviors, isCustomOverride = false) {
     return fetch(url, {credentials: "same-origin"})
         .then(response => response.json())
         .then(data => {
+            if (isCustomOverride) data.customBehaviors = data.customOverrides;
             for (const existingBehavior of data.customBehaviors.items) {
                 behaviors.delete(existingBehavior.name);
             }
@@ -59,6 +59,7 @@ function matchExistingBehaviors(behaviors, isCustomOverride = false) {
         .then(response => response.json())
         .then(data => {
             let existingBehaviors = [];
+            if (isCustomOverride) data.customBehaviors = data.customOverrides;
             for (const existingBehavior of data.customBehaviors.items) {
                 if (behaviors.has(existingBehavior.name))
                     existingBehaviors.push(existingBehavior);
@@ -95,8 +96,8 @@ function deleteAllCustomBehaviors(isCustomOverride = false) {
             let behaviorSet = new Set();
 
             data.forEach(behaviorFile => {
-                if (/\.xml$/.test(behaviorFile.name) && behaviorFile.size > 0)
-                    behaviorSet.set(behaviorFile.name.replace('.xml', ''), behaviorFile.download_url)
+                if (/\.xml$/.test(behaviorFile.name))
+                    behaviorSet.add(behaviorFile.name.replace('.xml', ''))
             });
             return behaviorSet;
         })
@@ -107,7 +108,7 @@ function deleteAllCustomBehaviors(isCustomOverride = false) {
 function main() {
     createAllCustomBehaviors();
     deleteAllCustomBehaviors();
-    createAllCustomOverrides(true);
+    createAllCustomBehaviors(true);
     deleteAllCustomBehaviors(true);
 }
 
