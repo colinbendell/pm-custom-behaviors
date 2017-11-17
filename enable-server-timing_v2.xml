@@ -142,7 +142,7 @@
 
     <assign:variable>
         <name>PMUSER_SERVERTIMING</name>
-        <value>%(PMUSER_SERVERTIMING)cdn;duration=%(ST_DURATION);start=%(PMUSER_SERVERTIMING_START);total=%(ST_TOTAL);description=%(PMUSER_SERVERTIMING_DESC)</value>
+        <value>%(PMUSER_SERVERTIMING)cdn;dur=%(ST_DURATION);start=%(PMUSER_SERVERTIMING_START);total=%(ST_TOTAL);desc=%(PMUSER_SERVERTIMING_DESC)</value>
         <hidden>on</hidden>
     </assign:variable>
     <edgeservices:modify-outgoing-response.add-header>
