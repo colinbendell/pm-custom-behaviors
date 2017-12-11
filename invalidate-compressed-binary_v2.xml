@@ -1,8 +1,8 @@
 <match:metadata-stage value="cache-hit">
-    <match:response.header name="Cache-Control" value="video/* image/*" value-wildcard="on">
+    <match:response.header name="Content-Type" value="video/* image/* binary/*" value-wildcard="on">
         <match:response.header name="X-Akamai-Uncompressed-Length">
             <cache:ccu.refetch-old-content>
-                <epoch>9999999999</epoch>
+                <epoch>0</epoch>
                 <ims>off</ims>
             </cache:ccu.refetch-old-content>
         </match:response.header>
