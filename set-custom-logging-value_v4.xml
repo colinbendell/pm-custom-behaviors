@@ -39,9 +39,9 @@
 </match:request.protocol>
 
 <assign:variable>
-<name>PMUSER_LOG_CLIENT_RTT_V</name>
-<value>%(AK_CLIENT_RTT)</value>
-<hidden>on</hidden>
+    <name>PMUSER_LOG_CLIENT_RTT_V</name>
+    <value>%(AK_CLIENT_RTT)</value>
+    <hidden>on</hidden>
 </assign:variable>
 
 <assign:variable>
