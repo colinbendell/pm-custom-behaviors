@@ -3,7 +3,7 @@
     <value>h1</value>
     <hidden>on</hidden>
 </assign:variable>
-    <assign:variable>
+<assign:variable>
     <name>PMUSER_LOG_SNI_V</name>
     <value></value>
     <hidden>on</hidden>
@@ -12,7 +12,7 @@
 <match:request.protocol value="HTTPS">
     <assign:variable>
         <name>PMUSER_LOG_SNI_V</name>
-        <value>%(AK_TLS_CIPHER_NAME)</value>
+        <value>!</value>
         <hidden>on</hidden>
     </assign:variable>
     <match:variable name="AK_TLS_SNI_NAME" value="EMPTY_STRING" result="false">
