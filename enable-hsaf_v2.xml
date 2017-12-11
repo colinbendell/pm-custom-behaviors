@@ -1,0 +1,24 @@
+<match:variable name="PMUSER_TD_MAP0_HOST">
+  <match:variable name="PMUSER_TD_MAP1_HOST">
+    <forward:cache-parent>
+      <status>on</status>
+      <selection-method>domain-lookup</selection-method>
+      <policy>tiered-distribution</policy>
+      <tier>
+        <name>TD0</name>
+        <map>%(PMUSER_TD_MAP0_HOST)</map>
+      </tier>
+      <tier>
+        <name>TD1</name>
+        <map>%(PMUSER_TD_MAP1_HOST)</map>
+      </tier>
+      <tier-order>TD0 TD1 ORIGIN</tier-order>
+    </forward:cache-parent>
+
+    <!-- ByPass Property Manager TD -->
+    <assign:variable>
+      <name>AKA_PM_BYPASS_TD</name>
+      <value>true</value>
+    </assign:variable>
+  </match:variable>
+</match:variable>
