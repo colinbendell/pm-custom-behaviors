@@ -125,34 +125,82 @@
     </assign:variable>
 
     <match:variable name="PMUSER_IS_CACHE_HIT" value="1" result="false">
-        <match:response.header name="Server-Timing-Last-Start" value-in-range="1:">
+        <assign:variable>
+            <name>ST_START_CHILD</name>
+            <value>0</value>
+            <hidden>on</hidden>
+        </assign:variable>
+        <match:response.header name="Server-Timing-Last-Start">
             <assign:extract-value>
                 <variable-name>ST_START_CHILD</variable-name>
                 <location>Response_Header</location>
                 <location-id>Server-Timing-Last-Start</location-id>
             </assign:extract-value>
-            <match:compare op="le" arg1="%(PMUSER_SERVERTIMING_START)" arg2="%(ST_START_CHILD)">
-                <match:response.header name="Server-Timing-Last-Total" value-in-range="1:">
-                    <assign:extract-value>
-                        <variable-name>ST_TOTAL_CHILD</variable-name>
-                        <location>Response_Header</location>
-                        <location-id>Server-Timing-Last-Total</location-id>
-                    </assign:extract-value>
-                    <match:compare op="ge" arg1="%(ST_DURATION)" arg2="%(ST_TOTAL_CHILD)">
-                        <assign:variable>
-                            <name>ST_DURATION</name>
-                            <value>%(ST_DURATION)</value>
-                            <hidden>on</hidden>
-                            <transform>
-                                <subtract>
-                                    <value>%(ST_TOTAL_CHILD)</value>
-                                </subtract>
-                            </transform>
-                        </assign:variable>
-                    </match:compare>
-                </match:response.header>
-            </match:compare>
         </match:response.header>
+        <match:response.header name="Server-Timing-Start">
+            <assign:extract-value>
+                <variable-name>ST_START_CHILD</variable-name>
+                <location>Response_Header</location>
+                <location-id>Server-Timing-Start</location-id>
+            </assign:extract-value>
+        </match:response.header>
+        <assign:variable>
+            <name>ST_START_CHILD</name>
+            <value>%(ST_START_CHILD)</value>
+            <hidden>on</hidden>
+            <transform>
+                <substitute>
+                    <regex>\..*$</regex>
+                    <replacement></replacement>
+                </substitute>
+            </transform>
+        </assign:variable>
+
+        <match:compare op="le" arg1="%(PMUSER_SERVERTIMING_START)" arg2="%(ST_START_CHILD)">
+            <assign:variable>
+                <name>ST_TOTAL_CHILD</name>
+                <value>0</value>
+                <hidden>on</hidden>
+            </assign:variable>
+            <match:response.header name="Server-Timing-Last-Total">
+                <assign:extract-value>
+                    <variable-name>ST_TOTAL_CHILD</variable-name>
+                    <location>Response_Header</location>
+                    <location-id>Server-Timing-Last-Total</location-id>
+                </assign:extract-value>
+            </match:response.header>
+            <match:response.header name="Server-Timing-Total">
+                <assign:extract-value>
+                    <variable-name>ST_TOTAL_CHILD</variable-name>
+                    <location>Response_Header</location>
+                    <location-id>Server-Timing-Total</location-id>
+                </assign:extract-value>
+            </match:response.header>
+            <assign:variable>
+                <name>ST_TOTAL_CHILD</name>
+                <value>%(ST_TOTAL_CHILD)</value>
+                <hidden>on</hidden>
+                <transform>
+                    <substitute>
+                        <regex>\..*$</regex>
+                        <replacement></replacement>
+                    </substitute>
+                </transform>
+            </assign:variable>
+
+            <match:compare op="ge" arg1="%(ST_DURATION)" arg2="%(ST_TOTAL_CHILD)">
+                <assign:variable>
+                    <name>ST_DURATION</name>
+                    <value>%(ST_DURATION)</value>
+                    <hidden>on</hidden>
+                    <transform>
+                        <subtract>
+                            <value>%(ST_TOTAL_CHILD)</value>
+                        </subtract>
+                    </transform>
+                </assign:variable>
+            </match:compare>
+        </match:compare>
     </match:variable>
 
     <assign:variable>
@@ -169,6 +217,11 @@
 
     <!-- pass along a running Total for convenience calculations -->
     <edgeservices:modify-outgoing-response.remove-header>
+        <name>Server-Timing-Total</name>
+        <status>on</status>
+        <edge-only>off</edge-only>
+    </edgeservices:modify-outgoing-response.remove-header>
+    <edgeservices:modify-outgoing-response.remove-header>
         <name>Server-Timing-Last-Total</name>
         <status>on</status>
         <edge-only>off</edge-only>
@@ -179,6 +232,12 @@
         <status>on</status>
         <edge-only>off</edge-only>
     </edgeservices:modify-outgoing-response.add-header>
+
+    <edgeservices:modify-outgoing-response.remove-header>
+        <name>Server-Timing-Start</name>
+        <status>on</status>
+        <edge-only>off</edge-only>
+    </edgeservices:modify-outgoing-response.remove-header>
     <edgeservices:modify-outgoing-response.remove-header>
         <name>Server-Timing-Last-Start</name>
         <status>on</status>
