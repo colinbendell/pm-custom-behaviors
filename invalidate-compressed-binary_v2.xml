@@ -2,7 +2,7 @@
     <match:response.header name="Content-Type" value="video/* image/* binary/*" value-wildcard="on">
         <match:response.header name="X-Akamai-Uncompressed-Length">
             <cache:ccu.refetch-old-content>
-                <epoch>0</epoch>
+                <epoch>9999999999</epoch>
                 <ims>off</ims>
             </cache:ccu.refetch-old-content>
         </match:response.header>
