@@ -245,7 +245,7 @@
     </edgeservices:modify-outgoing-response.remove-header>
     <edgeservices:modify-outgoing-response.add-header>
         <name>Server-Timing-Last-Start</name>
-        <value>%(ST_TOTAL)</value>
+        <value>%(PMUSER_SERVERTIMING_START)</value>
         <status>on</status>
         <edge-only>off</edge-only>
     </edgeservices:modify-outgoing-response.add-header>
