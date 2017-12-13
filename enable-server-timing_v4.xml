@@ -16,22 +16,49 @@
 
     <assign:variable>
         <name>PMUSER_SERVERTIMING_START</name>
-        <value>%(AK_CURRENT_TIME)</value>
+        <value>%(AK_CURRENT_TIME_MS)</value>
+        <hidden>on</hidden>
+    </assign:variable>
+    <assign:variable>
+        <name>PMUSER_SERVERTIMING_FWD_START</name>
+        <value>0</value>
+        <hidden>on</hidden>
+    </assign:variable>
+    <assign:variable>
+        <name>PMUSER_SERVERTIMING_FWD_END</name>
+        <value>0</value>
         <hidden>on</hidden>
     </assign:variable>
     <!-- todo: remove req time-->
-    <match:variable name="AK_CLIENT_TRANSFER_TIME" value-in-range="1:" >
+    <match:variable name="AK_CLIENT_REQUEST_END_TIME" value-in-range="1:" >
         <assign:variable>
             <name>PMUSER_SERVERTIMING_START</name>
             <value>%(PMUSER_SERVERTIMING_START)</value>
             <hidden>on</hidden>
             <transform>
                 <subtract>
-                    <value>%(AK_CLIENT_TRANSFER_TIME)</value>
+                    <value>%(AK_CLIENT_REQUEST_END_TIME)</value>
                 </subtract>
             </transform>
         </assign:variable>
     </match:variable>
+</match:metadata-stage>
+
+
+<match:metadata-stage value="forward-request">
+    <assign:variable>
+        <name>PMUSER_SERVERTIMING_FWD_START</name>
+        <value>%(AK_CURRENT_TIME_MS)</value>
+        <hidden>on</hidden>
+    </assign:variable>
+</match:metadata-stage>
+
+<match:metadata-stage value="forward-response">
+    <assign:variable>
+        <name>PMUSER_SERVERTIMING_FWD_END</name>
+        <value>%(AK_CURRENT_TIME_MS)</value>
+        <hidden>on</hidden>
+    </assign:variable>
 </match:metadata-stage>
 
 <match:metadata-stage value="client-response">
@@ -102,118 +129,55 @@
 
     <assign:variable>
         <name>ST_TOTAL</name>
-        <value>%(AK_CLIENT_TURNAROUND_TIME)</value>
+        <value>%(AK_CURRENT_TIME_MS)</value>
         <hidden>on</hidden>
+        <transform>
+            <subtract>
+                <value>%(PMUSER_SERVERTIMING_START)</value>
+            </subtract>
+        </transform>
     </assign:variable>
-    <match:variable name="AK_CLIENT_TRANSFER_TIME" value-in-range="1:">
-        <assign:variable>
-            <name>ST_TOTAL</name>
-            <value>%(ST_TOTAL)</value>
-            <hidden>on</hidden>
-            <transform>
-                <add>
-                    <value>%(AK_CLIENT_TRANSFER_TIME)</value>
-                </add>
-            </transform>
-        </assign:variable>
-    </match:variable>
 
     <assign:variable>
         <name>ST_DURATION</name>
         <value>%(ST_TOTAL)</value>
         <hidden>on</hidden>
     </assign:variable>
-
-    <match:variable name="PMUSER_IS_CACHE_HIT" value="1" result="false">
-        <assign:variable>
-            <name>ST_START_CHILD</name>
-            <value>0</value>
-            <hidden>on</hidden>
-        </assign:variable>
-        <match:response.header name="Server-Timing-Last-Start">
-            <assign:extract-value>
-                <variable-name>ST_START_CHILD</variable-name>
-                <location>Response_Header</location>
-                <location-id>Server-Timing-Last-Start</location-id>
-            </assign:extract-value>
-        </match:response.header>
-        <match:response.header name="Server-Timing-Start">
-            <assign:extract-value>
-                <variable-name>ST_START_CHILD</variable-name>
-                <location>Response_Header</location>
-                <location-id>Server-Timing-Start</location-id>
-            </assign:extract-value>
-        </match:response.header>
-        <assign:variable>
-            <name>ST_START_CHILD</name>
-            <value>%(ST_START_CHILD)</value>
-            <hidden>on</hidden>
-            <transform>
-                <substitute>
-                    <regex>\..*$</regex>
-                    <replacement></replacement>
-                </substitute>
-            </transform>
-        </assign:variable>
-
-        <match:compare op="le" arg1="%(PMUSER_SERVERTIMING_START)" arg2="%(ST_START_CHILD)">
+    <match:variable name="PMUSER_SERVERTIMING_FWD_START" value-in-range="1:">
+        <match:variable name="PMUSER_SERVERTIMING_FWD_END" value-in-range="1:">
             <assign:variable>
-                <name>ST_TOTAL_CHILD</name>
-                <value>0</value>
-                <hidden>on</hidden>
-            </assign:variable>
-            <match:response.header name="Server-Timing-Last-Total">
-                <assign:extract-value>
-                    <variable-name>ST_TOTAL_CHILD</variable-name>
-                    <location>Response_Header</location>
-                    <location-id>Server-Timing-Last-Total</location-id>
-                </assign:extract-value>
-            </match:response.header>
-            <match:response.header name="Server-Timing-Total">
-                <assign:extract-value>
-                    <variable-name>ST_TOTAL_CHILD</variable-name>
-                    <location>Response_Header</location>
-                    <location-id>Server-Timing-Total</location-id>
-                </assign:extract-value>
-            </match:response.header>
-            <assign:variable>
-                <name>ST_TOTAL_CHILD</name>
-                <value>%(ST_TOTAL_CHILD)</value>
+                <name>ST_DURATION</name>
+                <value>%(ST_TOTAL)</value>
                 <hidden>on</hidden>
                 <transform>
-                    <substitute>
-                        <regex>\..*$</regex>
-                        <replacement></replacement>
-                    </substitute>
+                    <subtract>
+                        <value>%(PMUSER_SERVERTIMING_FWD_END)</value>
+                    </subtract>
+                    <add>
+                        <value>%(PMUSER_SERVERTIMING_FWD_START)</value>
+                    </add>
                 </transform>
             </assign:variable>
-
-            <match:compare op="ge" arg1="%(ST_DURATION)" arg2="%(ST_TOTAL_CHILD)">
-                <assign:variable>
-                    <name>ST_DURATION</name>
-                    <value>%(ST_DURATION)</value>
-                    <hidden>on</hidden>
-                    <transform>
-                        <subtract>
-                            <value>%(ST_TOTAL_CHILD)</value>
-                        </subtract>
-                    </transform>
-                </assign:variable>
-            </match:compare>
-        </match:compare>
+        </match:variable>
     </match:variable>
+
+    <assign:variable>
+        <name>PMUSER_SERVERTIMING_START</name>
+        <value>%(PMUSER_SERVERTIMING_START)</value>
+        <hidden>on</hidden>
+        <transform>
+            <divide>
+                <value>1000</value>
+            </divide>
+        </transform>
+    </assign:variable>
+
 
     <assign:variable>
         <name>PMUSER_SERVERTIMING</name>
         <value>%(PMUSER_SERVERTIMING)cdn;%(PMUSER_SERVERTIMING_DUR_NAME)=%(ST_DURATION);start=%(PMUSER_SERVERTIMING_START);total=%(ST_TOTAL);%(PMUSER_SERVERTIMING_DESC_NAME)="%(PMUSER_SERVERTIMING_DESC)"</value>
         <hidden>on</hidden>
     </assign:variable>
-    <edgeservices:modify-outgoing-response.add-header>
-        <name>Server-Timing</name>
-        <value>%(PMUSER_SERVERTIMING)</value>
-        <status>on</status>
-        <edge-only>off</edge-only>
-    </edgeservices:modify-outgoing-response.add-header>
 
     <!-- pass along a running Total for convenience calculations -->
     <edgeservices:modify-outgoing-response.remove-header>
@@ -226,12 +190,6 @@
         <status>on</status>
         <edge-only>off</edge-only>
     </edgeservices:modify-outgoing-response.remove-header>
-    <edgeservices:modify-outgoing-response.add-header>
-        <name>Server-Timing-Last-Total</name>
-        <value>%(ST_TOTAL)</value>
-        <status>on</status>
-        <edge-only>off</edge-only>
-    </edgeservices:modify-outgoing-response.add-header>
 
     <edgeservices:modify-outgoing-response.remove-header>
         <name>Server-Timing-Start</name>
@@ -243,10 +201,4 @@
         <status>on</status>
         <edge-only>off</edge-only>
     </edgeservices:modify-outgoing-response.remove-header>
-    <edgeservices:modify-outgoing-response.add-header>
-        <name>Server-Timing-Last-Start</name>
-        <value>%(PMUSER_SERVERTIMING_START)</value>
-        <status>on</status>
-        <edge-only>off</edge-only>
-    </edgeservices:modify-outgoing-response.add-header>
 </match:metadata-stage>
