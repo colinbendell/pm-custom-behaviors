@@ -3,6 +3,11 @@
         <name>PMUSER_INVALIDATE_EPOCH</name>
         <value>%(AK_CURRENT_TIME)</value>
         <hidden>on</hidden>
+        <transform>
+            <subtract>
+                <value>1</value>
+            </subtract>
+        </transform>
     </assign:variable>
 </match:metadata-stage>
 
