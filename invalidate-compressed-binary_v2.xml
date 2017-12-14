@@ -1,8 +1,16 @@
+<match:metadata-stage value="client-request">
+    <assign:variable>
+        <name>PMUSER_INVALIDATE_EPOCH</name>
+        <value>%(AK_CURRENT_TIME)</value>
+        <hidden>on</hidden>
+    </assign:variable>
+</match:metadata-stage>
+
 <match:metadata-stage value="cache-hit">
     <match:response.header name="Content-Type" value="video/* image/* binary/*" value-wildcard="on">
         <match:response.header name="X-Akamai-Uncompressed-Length">
             <cache:ccu.refetch-old-content>
-                <epoch>9999999999</epoch>
+                <epoch>%(PMUSER_INVALIDATE_EPOCH)</epoch>
                 <ims>off</ims>
             </cache:ccu.refetch-old-content>
         </match:response.header>
