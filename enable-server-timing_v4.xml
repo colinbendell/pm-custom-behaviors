@@ -166,9 +166,10 @@
         <value>%(PMUSER_SERVERTIMING_START)</value>
         <hidden>on</hidden>
         <transform>
-            <divide>
-                <value>1000</value>
-            </divide>
+            <substitute>
+                <regex>(\d{3})$</regex>
+                <replacement>.$1</replacement>
+            </substitute>
         </transform>
     </assign:variable>
 
@@ -178,6 +179,12 @@
         <value>%(PMUSER_SERVERTIMING)cdn;%(PMUSER_SERVERTIMING_DUR_NAME)=%(ST_DURATION);start=%(PMUSER_SERVERTIMING_START);total=%(ST_TOTAL);%(PMUSER_SERVERTIMING_DESC_NAME)="%(PMUSER_SERVERTIMING_DESC)"</value>
         <hidden>on</hidden>
     </assign:variable>
+    <edgeservices:modify-outgoing-response.add-header>
+        <name>Server-Timing</name>
+        <value>%(PMUSER_SERVERTIMING)</value>
+        <status>on</status>
+        <edge-only>off</edge-only>
+    </edgeservices:modify-outgoing-response.add-header>
 
     <!-- pass along a running Total for convenience calculations -->
     <edgeservices:modify-outgoing-response.remove-header>
