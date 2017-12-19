@@ -62,12 +62,6 @@
     <hidden>on</hidden>
 </assign:variable>
 
-<assign:variable>
-    <name>PMUSER_LOG_AK_GHOSTIP_V</name>
-    <value>%(AK_GHOST_IP)</value>
-    <hidden>on</hidden>
-</assign:variable>
-
 <match:metadata-stage value="client-response">
     <assign:variable>
         <name>PMUSER_LOG_PREFIX_V</name>
@@ -82,12 +76,35 @@
     </assign:variable>
     <assign:variable>
         <name>PMUSER_LOG_REMOTE_CACHE_STATE_V</name>
-        <value>%(PMUSER_REMOTE_CACHE_STATE)</value>
+        <value>-</value>
         <hidden>on</hidden>
     </assign:variable>
+    <match:variable name="PMUSER_REMOTE_CACHE_STATE">
+        <assign:variable>
+            <name>PMUSER_LOG_REMOTE_CACHE_STATE_V</name>
+            <value>%(PMUSER_REMOTE_CACHE_STATE)</value>
+            <hidden>on</hidden>
+        </assign:variable>
+    </match:variable>
     <assign:variable>
         <name>PMUSER_LOG_TTFB_V</name>
         <value>%(AK_CLIENT_TURNAROUND_TIME)</value>
+        <hidden>on</hidden>
+    </assign:variable>
+
+    <assign:variable>
+        <name>PMUSER_LOG_HITCOUNT_V</name>
+        <value>%(AK_SE_REFCOUNT)</value>
+        <hidden>on</hidden>
+    </assign:variable>
+    <assign:variable>
+        <name>PMUSER_LOG_PCONN_V</name>
+        <value>:%(AK_CLIENT_REQUEST_NUMBER)</value>
+        <hidden>on</hidden>
+    </assign:variable>
+    <assign:variable>
+        <name>PMUSER_LOG_FPCONN_V</name>
+        <value>:%(AK_FWD_PCONN_USED)</value>
         <hidden>on</hidden>
     </assign:variable>
 
@@ -118,58 +135,72 @@
             <hidden>on</hidden>
         </assign:variable>
     </match:variable>
-    <match:variable name="PMUSER_LOG_CLIENT_RTT" value="0 off false">
-        <assign:variable>
-            <name>PMUSER_LOG_CLIENT_RTT_V</name>
-            <value></value>
-            <hidden>on</hidden>
-        </assign:variable>
-    </match:variable>
     <match:variable name="PMUSER_LOG_PROTO" value="0 off false">
         <assign:variable>
-            <name>PMUSER_LOG_CLIENT_RTT_V</name>
+            <name>PMUSER_LOG_PROTO_V</name>
             <value></value>
             <hidden>on</hidden>
         </assign:variable>
     </match:variable>
     <match:variable name="PMUSER_LOG_SNI" value="0 off false">
         <assign:variable>
-            <name>PMUSER_LOG_CLIENT_RTT_V</name>
+            <name>PMUSER_LOG_SNI_V</name>
             <value></value>
             <hidden>on</hidden>
         </assign:variable>
     </match:variable>
     <match:variable name="PMUSER_LOG_CLIENT_PORT" value="0 off false">
         <assign:variable>
-            <name>PMUSER_LOG_CLIENT_RTT_V</name>
+            <name>PMUSER_LOG_CLIENT_PORT_V</name>
             <value></value>
             <hidden>on</hidden>
         </assign:variable>
     </match:variable>
     <match:variable name="PMUSER_LOG_CACHE_STATE" value="0 off false">
         <assign:variable>
-            <name>PMUSER_LOG_CLIENT_RTT_V</name>
+            <name>PMUSER_LOG_CACHE_STATE_V</name>
             <value></value>
             <hidden>on</hidden>
         </assign:variable>
     </match:variable>
     <match:variable name="PMUSER_LOG_REMOTE_CACHE_STATE" value="0 off false">
         <assign:variable>
-            <name>PMUSER_LOG_CLIENT_RTT_V</name>
+            <name>PMUSER_LOG_REMOTE_CACHE_STATE_V</name>
+            <value></value>
+            <hidden>on</hidden>
+        </assign:variable>
+    </match:variable>
+    <match:variable name="PMUSER_LOG_CACHECOUNT" value="0 off false">
+        <assign:variable>
+            <name>PMUSER_LOG_HITCOUNT_V</name>
+            <value></value>
+            <hidden>on</hidden>
+        </assign:variable>
+    </match:variable>
+    <match:variable name="PMUSER_LOG_PCONN" value="0 off false">
+        <assign:variable>
+            <name>PMUSER_LOG_PCONN_V</name>
+            <value></value>
+            <hidden>on</hidden>
+        </assign:variable>
+    </match:variable>
+    <match:variable name="PMUSER_LOG_FPCONN" value="0 off false">
+        <assign:variable>
+            <name>PMUSER_LOG_FPCONN_V</name>
             <value></value>
             <hidden>on</hidden>
         </assign:variable>
     </match:variable>
     <match:variable name="PMUSER_LOG_ORIGIN_REQUESTID" value="0 off false">
         <assign:variable>
-            <name>PMUSER_LOG_CLIENT_RTT_V</name>
+            <name>PMUSER_LOG_ORIGIN_REQUESTID_V</name>
             <value></value>
             <hidden>on</hidden>
         </assign:variable>
     </match:variable>
     <match:variable name="PMUSER_LOG_AK_REQUESTID" value="0 off false">
         <assign:variable>
-            <name>PMUSER_LOG_CLIENT_RTT_V</name>
+            <name>PMUSER_LOG_AK_REQUESTID_V</name>
             <value></value>
             <hidden>on</hidden>
         </assign:variable>
@@ -181,26 +212,19 @@
             <hidden>on</hidden>
         </assign:variable>
     </match:variable>
-    <match:variable name="PMUSER_LOG_AK_GHOSTIP" value="1 on true" result="false">
-        <assign:variable>
-            <name>PMUSER_LOG_CLIENT_RTT_V</name>
-            <value></value>
-            <hidden>on</hidden>
-        </assign:variable>
-    </match:variable>
 
     <!-- Custom Logging is limitted to 40 characters -->
     <!-- Worst case: RTT: 4, SNI: 4; PROTO: 2; PORT: 5; CACHE: 1; CACHE-REMOTE: 1; TTFB: 4; X-Req: 8; X-Akam-Req: 16; Ghost IP: 15 -->
     <!-- Likely case: RTT: 3, SNI: 0; PROTO: 2; PORT: 5; CACHE: 1; CACHE-REMOTE: 1; TTFB: 3; X-Req: 8; X-Akam-Req: 16; Ghost IP: 15 -->
     <assign:variable>
         <name>PMUSER_CUSTOM_LOG_VALUE</name>
-        <value>%(PMUSER_LOG_PREFIX_V)%(PMUSER_LOG_CLIENT_RTT_V)%(PMUSER_LOG_PROTO_V)%(PMUSER_LOG_SNI_V)%(PMUSER_LOG_CLIENT_PORT_V)%(PMUSER_LOG_CACHE_STATE_V)%(PMUSER_LOG_REMOTE_CACHE_STATE_V)%(PMUSER_LOG_TTFB_V)%(PMUSER_LOG_ORIGIN_REQUESTID_V).%(PMUSER_LOG_AK_REQUESTID_V)%(PMUSER_LOG_AK_GHOSTIP_V)%(PMUSER_LOG_ARLID_V)</value>
+        <value>%(PMUSER_LOG_PREFIX_V)%(PMUSER_LOG_CLIENT_RTT_V)%(PMUSER_LOG_PROTO_V)%(PMUSER_LOG_SNI_V)%(PMUSER_LOG_CLIENT_PORT_V)%(PMUSER_LOG_CACHE_STATE_V)%(PMUSER_LOG_HITCOUNT_V)%(PMUSER_LOG_REMOTE_CACHE_STATE_V)%(PMUSER_LOG_TTFB_V)%(PMUSER_LOG_ORIGIN_REQUESTID_V).%(PMUSER_LOG_AK_REQUESTID_V)%(PMUSER_LOG_PCONN_V)%(PMUSER_LOG_FPCONN_V)%(PMUSER_LOG_ARLID_V)</value>
         <hidden>on</hidden>
     </assign:variable>
     <match:variable name="PMUSER_LOG_IS_DELIMITED" value="1 on true">
         <assign:variable>
             <name>PMUSER_CUSTOM_LOG_VALUE</name>
-            <value>%(PMUSER_LOG_PREFIX_V)%(PMUSER_LOG_CLIENT_RTT_V);%(PMUSER_LOG_PROTO_V);%(PMUSER_LOG_SNI_V);%(PMUSER_LOG_CLIENT_PORT_V);%(PMUSER_LOG_CACHE_STATE_V);%(PMUSER_LOG_REMOTE_CACHE_STATE_V);%(PMUSER_LOG_TTFB_V);%(PMUSER_LOG_ORIGIN_REQUESTID_V);%(PMUSER_LOG_AK_REQUESTID_V);%(PMUSER_LOG_AK_GHOSTIP_V)%(PMUSER_LOG_ARLID_V)</value>
+            <value>%(PMUSER_LOG_PREFIX_V)%(PMUSER_LOG_CLIENT_RTT_V);%(PMUSER_LOG_PROTO_V);%(PMUSER_LOG_SNI_V);%(PMUSER_LOG_CLIENT_PORT_V);%(PMUSER_LOG_CACHE_STATE_V);%(PMUSER_LOG_HITCOUNT_V);%(PMUSER_LOG_REMOTE_CACHE_STATE_V);%(PMUSER_LOG_TTFB_V);%(PMUSER_LOG_ORIGIN_REQUESTID_V);%(PMUSER_LOG_AK_REQUESTID_V);%(PMUSER_LOG_ARLID_V)</value>
             <hidden>on</hidden>
         </assign:variable>
     </match:variable>
