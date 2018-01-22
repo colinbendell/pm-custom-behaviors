@@ -152,7 +152,6 @@ PMUSER_SERVERTIMING_DESC_INCL_START 1 adds the start to the description field
         <substitute>
             <regex>(\d{3})$</regex>
             <replacement>.$1</replacement>
-            <impl>re2</impl>
         </substitute>
     </transform>
 </assign:variable>
