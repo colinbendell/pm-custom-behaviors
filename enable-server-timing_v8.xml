@@ -220,6 +220,7 @@ PMUSER_SERVERTIMING_DESC_INCL_START 1 adds the start to the description field
             <substitute>
                 <regex>"[ ]*:[ ]*"</regex>
                 <replacement>~'</replacement>
+                <flags>g</flags>
             </substitute>
             <substitute>
                 <regex>[:,]</regex>
@@ -229,6 +230,7 @@ PMUSER_SERVERTIMING_DESC_INCL_START 1 adds the start to the description field
             <substitute>
                 <regex>"|^{|}$</regex>
                 <replacement></replacement>
+                <flags>g</flags>
             </substitute>
         </transform>
     </assign:variable>
