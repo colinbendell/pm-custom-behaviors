@@ -236,7 +236,7 @@ PMUSER_SERVERTIMING_DESC_INCL_START 1 adds the start to the description field
     </assign:variable>
     <assign:variable>
         <name>PMUSER_SERVERTIMING_DESC_V</name>
-        <value>~(%(PMUSER_SERVERTIMING_DESC_V))</value>
+        <value>"~(%(PMUSER_SERVERTIMING_DESC_V))"</value>
         <hidden>on</hidden>
     </assign:variable>
 </match:variable>
