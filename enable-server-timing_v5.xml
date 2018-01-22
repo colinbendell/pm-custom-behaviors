@@ -1,60 +1,60 @@
 <!--
 PMUSER_SERVERTIMING_DESC_AS_JSURL 1 uses JSON to URL
-PMUSER_SERVERTIMING_DESC_DQUOTE 1 encloses the description with double-quotes desc="foo" (ignored if using jsurl)
+PMUSER_SERVERTIMING_DESC_DQUOTE 1 encloses the description with double-quotes desc='foo' (ignored if using jsurl)
 PMUSER_SERVERTIMING_DESC_INCL_TOTAL 1 adds the total to the description field
 PMUSER_SERVERTIMING_DESC_INCL_START 1 adds the start to the description field
 -->
-<match:metadata-stage value="client-request">
-    <match:variable name="PMUSER_SERVERTIMING_DESC_AS_JSURL" result="false">
+<match:metadata-stage value='client-request'>
+    <match:variable name='PMUSER_SERVERTIMING_DESC_AS_JSURL' result='false'>
         <assign:variable>
             <name>PMUSER_SERVERTIMING_DESC_AS_JSURL</name>
             <value>1</value>
             <hidden>on</hidden>
         </assign:variable>
     </match:variable>
-    <match:variable name="PMUSER_SERVERTIMING_DESC_DQUOTE" result="false">
+    <match:variable name='PMUSER_SERVERTIMING_DESC_DQUOTE' result='false'>
         <assign:variable>
             <name>PMUSER_SERVERTIMING_DESC_DQUOTE</name>
             <value>1</value>
             <hidden>on</hidden>
         </assign:variable>
     </match:variable>
-    <match:variable name="PMUSER_SERVERTIMING_DESC_INCL_TOTAL" result="false">
+    <match:variable name='PMUSER_SERVERTIMING_DESC_INCL_TOTAL' result='false'>
         <assign:variable>
             <name>PMUSER_SERVERTIMING_DESC_INCL_TOTAL</name>
             <value>1</value>
             <hidden>on</hidden>
         </assign:variable>
     </match:variable>
-    <match:variable name="PMUSER_SERVERTIMING_DESC_INCL_START" result="false">
+    <match:variable name='PMUSER_SERVERTIMING_DESC_INCL_START' result='false'>
         <assign:variable>
             <name>PMUSER_SERVERTIMING_DESC_INCL_START</name>
             <value>1</value>
             <hidden>on</hidden>
         </assign:variable>
     </match:variable>
-    <match:variable name="PMUSER_SERVERTIMING_DESC_NAME" result="false">
+    <match:variable name='PMUSER_SERVERTIMING_DESC_NAME' result='false'>
         <assign:variable>
             <name>PMUSER_SERVERTIMING_DESC_NAME</name>
             <value>desc</value>
             <hidden>on</hidden>
         </assign:variable>
     </match:variable>
-    <match:variable name="PMUSER_SERVERTIMING_DUR_NAME" result="false">
+    <match:variable name='PMUSER_SERVERTIMING_DUR_NAME' result='false'>
         <assign:variable>
             <name>PMUSER_SERVERTIMING_DUR_NAME</name>
             <value>dur</value>
             <hidden>on</hidden>
         </assign:variable>
     </match:variable>
-    <match:variable name="PMUSER_SERVERTIMING_START_NAME" result="false">
+    <match:variable name='PMUSER_SERVERTIMING_START_NAME' result='false'>
         <assign:variable>
             <name>PMUSER_SERVERTIMING_START_NAME</name>
             <value>start</value>
             <hidden>on</hidden>
         </assign:variable>
     </match:variable>
-    <match:variable name="PMUSER_SERVERTIMING_TOTAL_NAME" result="false">
+    <match:variable name='PMUSER_SERVERTIMING_TOTAL_NAME' result='false'>
         <assign:variable>
             <name>PMUSER_SERVERTIMING_TOTAL_NAME</name>
             <value>total</value>
@@ -78,7 +78,7 @@ PMUSER_SERVERTIMING_DESC_INCL_START 1 adds the start to the description field
         <hidden>on</hidden>
     </assign:variable>
     <!-- todo: remove req time-->
-    <match:variable name="AK_CLIENT_REQUEST_END_TIME" value-in-range="1:" >
+    <match:variable name='AK_CLIENT_REQUEST_END_TIME' value-in-range='1:' >
         <assign:variable>
             <name>PMUSER_SERVERTIMING_START</name>
             <value>%(PMUSER_SERVERTIMING_START)</value>
@@ -93,7 +93,7 @@ PMUSER_SERVERTIMING_DESC_INCL_START 1 adds the start to the description field
 </match:metadata-stage>
 
 
-<match:metadata-stage value="forward-request">
+<match:metadata-stage value='forward-request'>
     <assign:variable>
         <name>PMUSER_SERVERTIMING_FWD_START</name>
         <value>%(AK_CURRENT_TIME_MS)</value>
@@ -101,7 +101,7 @@ PMUSER_SERVERTIMING_DESC_INCL_START 1 adds the start to the description field
     </assign:variable>
 </match:metadata-stage>
 
-<match:metadata-stage value="forward-response">
+<match:metadata-stage value='forward-response'>
     <assign:variable>
         <name>PMUSER_SERVERTIMING_FWD_END</name>
         <value>%(AK_CURRENT_TIME_MS)</value>
@@ -109,7 +109,7 @@ PMUSER_SERVERTIMING_DESC_INCL_START 1 adds the start to the description field
     </assign:variable>
 </match:metadata-stage>
 
-<match:metadata-stage value="client-response">
+<match:metadata-stage value='client-response'>
     <assign:variable>
         <name>ST_TOTAL</name>
         <value>%(AK_CURRENT_TIME_MS)</value>
@@ -126,8 +126,8 @@ PMUSER_SERVERTIMING_DESC_INCL_START 1 adds the start to the description field
         <value>%(ST_TOTAL)</value>
         <hidden>on</hidden>
     </assign:variable>
-    <match:variable name="PMUSER_SERVERTIMING_FWD_START" value-in-range="1:">
-        <match:variable name="PMUSER_SERVERTIMING_FWD_END" value-in-range="1:">
+    <match:variable name='PMUSER_SERVERTIMING_FWD_START' value-in-range='1:'>
+        <match:variable name='PMUSER_SERVERTIMING_FWD_END' value-in-range='1:'>
             <assign:variable>
                 <name>ST_DURATION</name>
                 <value>%(ST_TOTAL)</value>
@@ -157,55 +157,54 @@ PMUSER_SERVERTIMING_DESC_INCL_START 1 adds the start to the description field
         </transform>
     </assign:variable>
 
-    <match:variable name="PMUSER_IS_CACHE_HIT" value="1">
+    <match:variable name='PMUSER_IS_CACHE_HIT' value='1'>
         <assign:variable>
             <name>PMUSER_SERVERTIMING_DESC_V</name>
-            <value>"cache":"hit",</value>
+            <value>'cache':'hit',</value>
             <hidden>on</hidden>
         </assign:variable>
     </match:variable>
-    <match:variable name="PMUSER_IS_CACHE_MISS" value="1">
+    <match:variable name='PMUSER_IS_CACHE_MISS' value='1'>
         <assign:variable>
             <name>PMUSER_SERVERTIMING_DESC_V</name>
-            <value>"cache":"miss",</value>
+            <value>'cache':'miss',</value>
             <hidden>on</hidden>
         </assign:variable>
     </match:variable>
-    <match:variable name="PMUSER_IS_NOSTORE" value="1">
+    <match:variable name='PMUSER_IS_NOSTORE' value='1'>
         <assign:variable>
             <name>PMUSER_SERVERTIMING_DESC_V</name>
-            <value>"cache":"nostore",</value>
+            <value>'cache':'nostore',</value>
             <hidden>on</hidden>
         </assign:variable>
     </match:variable>
-    start=%(PMUSER_SERVERTIMING_START);total=%(ST_TOTAL)
-    <match:variable name="PMUSER_SERVERTIMING_DESC_INCL_TOTAL" value="1 on yes">
+    <match:variable name='PMUSER_SERVERTIMING_DESC_INCL_TOTAL' value='1 on yes'>
         <assign:variable>
             <name>PMUSER_SERVERTIMING_DESC_V</name>
-            <value>%(PMUSER_SERVERTIMING_DESC_V)"%(PMUSER_SERVERTIMING_TOTAL_NAME)":%(ST_TOTAL),</value>
+            <value>%(PMUSER_SERVERTIMING_DESC_V)'%(PMUSER_SERVERTIMING_TOTAL_NAME)':%(ST_TOTAL),</value>
             <hidden>on</hidden>
         </assign:variable>
     </match:variable>
-    <match:variable name="PMUSER_SERVERTIMING_DESC_INCL_START" value="1 on yes">
+    <match:variable name='PMUSER_SERVERTIMING_DESC_INCL_START' value='1 on yes'>
         <assign:variable>
             <name>PMUSER_SERVERTIMING_DESC_V</name>
-            <value>%(PMUSER_SERVERTIMING_DESC_V)"%(PMUSER_SERVERTIMING_START_NAME)":%(PMUSER_SERVERTIMING_START),</value>
+            <value>%(PMUSER_SERVERTIMING_DESC_V)'%(PMUSER_SERVERTIMING_START_NAME)':%(PMUSER_SERVERTIMING_START),</value>
             <hidden>on</hidden>
         </assign:variable>
     </match:variable>
     <assign:variable>
         <name>PMUSER_SERVERTIMING_DESC_V</name>
-        <value>%(PMUSER_SERVERTIMING_DESC_V)"rtt":%(AK_CLIENT_RTT),"id":"%(AK_REQUEST_ID)","pconn":%(AK_CLIENT_REQUEST_NUMBER)</value>
+        <value>%(PMUSER_SERVERTIMING_DESC_V)'rtt':%(AK_CLIENT_RTT),'id':'%(AK_REQUEST_ID)','pconn':%(AK_CLIENT_REQUEST_NUMBER)</value>
         <hidden>on</hidden>
     </assign:variable>
-    <match:variable name="PMUSER_IS_CACHE_HIT" value="1" result="false">
+    <match:variable name='PMUSER_IS_CACHE_HIT' value='1' result='false'>
         <assign:variable>
             <name>PMUSER_SERVERTIMING_DESC_V</name>
-            <value>%(PMUSER_SERVERTIMING_DESC_V),"f_pconn":%(AK_FWD_PCONN_USED)</value>
+            <value>%(PMUSER_SERVERTIMING_DESC_V),'f_pconn':%(AK_FWD_PCONN_USED)</value>
             <hidden>on</hidden>
         </assign:variable>
     </match:variable>
-    <match:variable name="PMUSER_SERVERTIMING_DESC">
+    <match:variable name='PMUSER_SERVERTIMING_DESC'>
         <assign:variable>
             <name>PMUSER_SERVERTIMING_DESC_V</name>
             <value>%(PMUSER_SERVERTIMING_DESC),%(PMUSER_SERVERTIMING_DESC_V)</value>
@@ -213,14 +212,14 @@ PMUSER_SERVERTIMING_DESC_INCL_START 1 adds the start to the description field
         </assign:variable>
     </match:variable>
 
-    <match:variable name="PMUSER_SERVERTIMING_DESC_AS_JSURL" value="1 on yes">
+    <match:variable name='PMUSER_SERVERTIMING_DESC_AS_JSURL' value='1 on yes'>
         <assign:variable>
             <name>PMUSER_SERVERTIMING_DESC_V</name>
             <value>%(PMUSER_SERVERTIMING_DESC_V)</value>
             <hidden>on</hidden>
             <transform>
                 <substitute>
-                    <regex>"[ ]*:[ ]*"</regex>
+                    <regex>'[ ]*:[ ]*'</regex>
                     <replacement>~'</replacement>
                     <impl>re2</impl>
                 </substitute>
@@ -231,7 +230,7 @@ PMUSER_SERVERTIMING_DESC_INCL_START 1 adds the start to the description field
                     <impl>re2</impl>
                 </substitute>
                 <substitute>
-                    <regex>"|^{|}$</regex>
+                    <regex>'|^{|}$</regex>
                     <replacement></replacement>
                     <impl>re2</impl>
                 </substitute>
@@ -244,11 +243,11 @@ PMUSER_SERVERTIMING_DESC_INCL_START 1 adds the start to the description field
         </assign:variable>
     </match:variable>
 
-    <match:variable name="PMUSER_SERVERTIMING_DESC_AS_JSURL" value="1 on yes" result="false">
-        <match:variable name="PMUSER_SERVERTIMING_DESC_DQUOTE" value="1 on yes">
+    <match:variable name='PMUSER_SERVERTIMING_DESC_AS_JSURL' value='1 on yes' result='false'>
+        <match:variable name='PMUSER_SERVERTIMING_DESC_DQUOTE' value='1 on yes'>
             <assign:variable>
                 <name>PMUSER_SERVERTIMING_DESC_V</name>
-                <value>"%(PMUSER_SERVERTIMING_DESC_V)"</value>
+                <value>'%(PMUSER_SERVERTIMING_DESC_V)'</value>
                 <hidden>on</hidden>
             </assign:variable>
         </match:variable>
