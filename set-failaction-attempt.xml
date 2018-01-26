@@ -1,0 +1,42 @@
+<match:metadata-stage value="client-request">
+    <assign:variable>
+        <name>PMUSER_SITEFAILOVER</name>
+        <value>0</value>
+        <hidden>on</hidden>
+    </assign:variable>
+    <match:fail-action2-attempt value="1:">
+        <assign:variable>
+            <name>PMUSER_SITEFAILOVER</name>
+            <value>1</value>
+            <hidden>on</hidden>
+        </assign:variable>
+        <match:fail-action2-attempt value="2:">
+            <assign:variable>
+                <name>PMUSER_SITEFAILOVER</name>
+                <value>2</value>
+                <hidden>on</hidden>
+            </assign:variable>
+            <match:fail-action2-attempt value="3:">
+                <assign:variable>
+                    <name>PMUSER_SITEFAILOVER</name>
+                    <value>3</value>
+                    <hidden>on</hidden>
+                </assign:variable>
+                <match:fail-action2-attempt value="4:">
+                    <assign:variable>
+                        <name>PMUSER_SITEFAILOVER</name>
+                        <value>4</value>
+                        <hidden>on</hidden>
+                    </assign:variable>
+                    <match:fail-action2-attempt value="5:">
+                        <assign:variable>
+                            <name>PMUSER_SITEFAILOVER</name>
+                            <value>5</value>
+                            <hidden>on</hidden>
+                        </assign:variable>
+                    </match:fail-action2-attempt>
+                </match:fail-action2-attempt>
+            </match:fail-action2-attempt>
+        </match:fail-action2-attempt>
+    </match:fail-action2-attempt>
+</match:metadata-stage>
