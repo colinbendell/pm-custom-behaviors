@@ -26,6 +26,33 @@
             <sensitive>on</sensitive>
         </assign:extract-value>
     </match:response.header>
+    <match:response.header name="Surrogate-Settings">
+        <assign:extract-value>
+            <location>Response_Header</location>
+            <location-id>Surrogate-Settings</location-id>
+            <variable-name>PMUSER_SURROGATE_SETTINGS</variable-name>
+            <hidden>on</hidden>
+            <sensitive>on</sensitive>
+        </assign:extract-value>
+    </match:response.header>
+    <match:response.header name="Surrogate-Vary">
+        <assign:extract-value>
+            <location>Response_Header</location>
+            <location-id>Surrogate-Vary</location-id>
+            <variable-name>PMUSER_SURROGATE_VARY</variable-name>
+            <hidden>on</hidden>
+            <sensitive>on</sensitive>
+        </assign:extract-value>
+    </match:response.header>
+    <match:response.header name="Surrogate-Variant">
+        <assign:extract-value>
+            <location>Response_Header</location>
+            <location-id>Surrogate-Vary</location-id>
+            <variable-name>PMUSER_SURROGATE_VARIANT</variable-name>
+            <hidden>on</hidden>
+            <sensitive>on</sensitive>
+        </assign:extract-value>
+    </match:response.header>
     <match:response.header name="Surrogate-Control">
         <assign:extract-value>
             <location>Response_Header</location>
