@@ -11,7 +11,7 @@
     <match:response.header name="Surrogate-ACL">
         <assign:extract-value>
             <location>Response_Header</location>
-            <location-id>Surrogate-Location</location-id>
+            <location-id>Surrogate-ACL</location-id>
             <variable-name>PMUSER_SURROGATE_ACL</variable-name>
             <hidden>on</hidden>
             <sensitive>on</sensitive>
@@ -20,7 +20,7 @@
     <match:response.header name="Surrogate-Access">
         <assign:extract-value>
             <location>Response_Header</location>
-            <location-id>Surrogate-Location</location-id>
+            <location-id>Surrogate-Access</location-id>
             <variable-name>PMUSER_SURROGATE_ACCESS</variable-name>
             <hidden>on</hidden>
             <sensitive>on</sensitive>
@@ -47,7 +47,7 @@
     <match:response.header name="Surrogate-Variant">
         <assign:extract-value>
             <location>Response_Header</location>
-            <location-id>Surrogate-Vary</location-id>
+            <location-id>Surrogate-Variant</location-id>
             <variable-name>PMUSER_SURROGATE_VARIANT</variable-name>
             <hidden>on</hidden>
             <sensitive>on</sensitive>
@@ -56,7 +56,7 @@
     <match:response.header name="Surrogate-Control">
         <assign:extract-value>
             <location>Response_Header</location>
-            <location-id>Surrogate-Location</location-id>
+            <location-id>Surrogate-Control</location-id>
             <variable-name>PMUSER_SURROGATE_CONTROL</variable-name>
             <hidden>on</hidden>
             <sensitive>on</sensitive>
