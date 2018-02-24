@@ -5,7 +5,7 @@
             <location-id>Surrogate-Location</location-id>
             <variable-name>PMUSER_SURROGATE_LOCATION</variable-name>
             <hidden>on</hidden>
-            <sensitive>on</sensitive>
+            <sensitive>off</sensitive>
         </assign:extract-value>
     </match:response.header>
     <match:response.header name="Surrogate-ACL">
@@ -14,7 +14,7 @@
             <location-id>Surrogate-ACL</location-id>
             <variable-name>PMUSER_SURROGATE_ACL</variable-name>
             <hidden>on</hidden>
-            <sensitive>on</sensitive>
+            <sensitive>off</sensitive>
         </assign:extract-value>
     </match:response.header>
     <match:response.header name="Surrogate-Access">
@@ -23,7 +23,7 @@
             <location-id>Surrogate-Access</location-id>
             <variable-name>PMUSER_SURROGATE_ACCESS</variable-name>
             <hidden>on</hidden>
-            <sensitive>on</sensitive>
+            <sensitive>off</sensitive>
         </assign:extract-value>
     </match:response.header>
     <match:response.header name="Surrogate-Settings">
@@ -32,7 +32,7 @@
             <location-id>Surrogate-Settings</location-id>
             <variable-name>PMUSER_SURROGATE_SETTINGS</variable-name>
             <hidden>on</hidden>
-            <sensitive>on</sensitive>
+            <sensitive>off</sensitive>
         </assign:extract-value>
     </match:response.header>
     <match:response.header name="Surrogate-Vary">
@@ -41,7 +41,7 @@
             <location-id>Surrogate-Vary</location-id>
             <variable-name>PMUSER_SURROGATE_VARY</variable-name>
             <hidden>on</hidden>
-            <sensitive>on</sensitive>
+            <sensitive>off</sensitive>
         </assign:extract-value>
     </match:response.header>
     <match:response.header name="Surrogate-Variant">
@@ -50,7 +50,7 @@
             <location-id>Surrogate-Variant</location-id>
             <variable-name>PMUSER_SURROGATE_VARIANT</variable-name>
             <hidden>on</hidden>
-            <sensitive>on</sensitive>
+            <sensitive>off</sensitive>
         </assign:extract-value>
     </match:response.header>
     <match:response.header name="Surrogate-Control">
@@ -59,7 +59,7 @@
             <location-id>Surrogate-Control</location-id>
             <variable-name>PMUSER_SURROGATE_CONTROL</variable-name>
             <hidden>on</hidden>
-            <sensitive>on</sensitive>
+            <sensitive>off</sensitive>
         </assign:extract-value>
     </match:response.header>
 </match:metadata-stage>

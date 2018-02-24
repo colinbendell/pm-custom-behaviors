@@ -9,7 +9,7 @@
 	        <name>PMUSER_REDIRECT_DEST</name>
 	        <value>%(TMP_LOCATION)</value>
 	        <hidden>on</hidden>
-	        <sensitive>on</sensitive>
+	        <sensitive>off</sensitive>
 	    </assign:variable>
     </match:response.status>
     <match:response.status value="300:399" result="true">
@@ -23,7 +23,7 @@
 		        <name>PMUSER_REDIRECT_DEST</name>
 		        <value>%(TMP_LOCATION)</value>
 		        <hidden>on</hidden>
-		        <sensitive>on</sensitive>
+		        <sensitive>off</sensitive>
 		    </assign:variable>
 		</match:response.header>
     </match:response.status>
