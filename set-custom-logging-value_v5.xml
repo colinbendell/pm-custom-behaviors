@@ -1,66 +1,102 @@
-<assign:variable>
-    <name>PMUSER_LOG_PROTO_V</name>
-    <value>h1</value>
-    <hidden>on</hidden>
-</assign:variable>
-<assign:variable>
-    <name>PMUSER_LOG_SNI_V</name>
-    <value></value>
-    <hidden>on</hidden>
-</assign:variable>
-
-<match:request.protocol value="HTTPS">
-    <assign:variable>
-        <name>PMUSER_LOG_SNI_V</name>
-        <value>!</value>
-        <hidden>on</hidden>
-    </assign:variable>
-    <match:variable name="AK_TLS_SNI_NAME" value="EMPTY_STRING" result="false">
-        <assign:variable>
-            <name>PMUSER_LOG_SNI_V</name>
-            <value></value>
-            <hidden>on</hidden>
-        </assign:variable>
-    </match:variable>
-
+<match:metadata-stage value="client-request">
     <assign:variable>
         <name>PMUSER_LOG_PROTO_V</name>
-        <value>tls</value>
+        <value>h1</value>
+        <hidden>on</hidden>
+    </assign:variable>
+    <assign:variable>
+        <name>PMUSER_LOG_SNI_V</name>
+        <value></value>
         <hidden>on</hidden>
     </assign:variable>
 
-    <match:variable name="AK_PROTOCOL_NEGOTIATION" value="http2">
+    <match:request.protocol value="HTTPS">
         <assign:variable>
-            <name>PMUSER_LOG_PROTO_V</name>
-            <value>h2</value>
+            <name>PMUSER_LOG_SNI_V</name>
+            <value>!</value>
             <hidden>on</hidden>
         </assign:variable>
-    </match:variable>
-</match:request.protocol>
+        <match:variable name="AK_TLS_SNI_NAME" value="EMPTY_STRING" result="false">
+            <assign:variable>
+                <name>PMUSER_LOG_SNI_V</name>
+                <value></value>
+                <hidden>on</hidden>
+            </assign:variable>
+        </match:variable>
 
-<assign:variable>
-    <name>PMUSER_LOG_CLIENT_RTT_V</name>
-    <value>%(AK_CLIENT_RTT)</value>
-    <hidden>on</hidden>
-</assign:variable>
+        <assign:variable>
+            <name>PMUSER_LOG_PROTO_V</name>
+            <value>tls</value>
+            <hidden>on</hidden>
+        </assign:variable>
 
-<assign:variable>
-    <name>PMUSER_LOG_ARLID_V</name>
-    <value>%(AK_ARLID).%(AK_ARLVERSION)</value>
-    <hidden>on</hidden>
-</assign:variable>
+        <match:variable name="AK_PROTOCOL_NEGOTIATION" value="http2">
+            <assign:variable>
+                <name>PMUSER_LOG_PROTO_V</name>
+                <value>h2</value>
+                <hidden>on</hidden>
+            </assign:variable>
+        </match:variable>
+    </match:request.protocol>
 
-<assign:variable>
-    <name>PMUSER_LOG_CLIENT_PORT_V</name>
-    <value>%(AK_TRUE_CLIENT_PORT)</value>
-    <hidden>on</hidden>
-</assign:variable>
+    <assign:variable>
+        <name>PMUSER_LOG_CLIENT_RTT_V</name>
+        <value>%(AK_CLIENT_RTT)</value>
+        <hidden>on</hidden>
+    </assign:variable>
 
-<assign:variable>
-    <name>PMUSER_LOG_AK_REQUESTID_V</name>
-    <value>%(AK_REQUEST_ID)</value>
-    <hidden>on</hidden>
-</assign:variable>
+    <assign:variable>
+        <name>PMUSER_LOG_ARLID_V</name>
+        <value>%(AK_ARLID).%(AK_ARLVERSION)</value>
+        <hidden>on</hidden>
+    </assign:variable>
+
+    <assign:variable>
+        <name>PMUSER_LOG_CLIENT_PORT_V</name>
+        <value>%(AK_TRUE_CLIENT_PORT)</value>
+        <hidden>on</hidden>
+    </assign:variable>
+
+    <assign:variable>
+        <name>PMUSER_LOG_AK_REQUESTID_V</name>
+        <value>%(AK_REQUEST_ID)</value>
+        <hidden>on</hidden>
+    </assign:variable>
+
+    <assign:variable>
+        <name>PMUSER_LOG_PCONN_V</name>
+        <value>:%(AK_CLIENT_REQUEST_NUMBER)</value>
+        <hidden>on</hidden>
+    </assign:variable>
+</match:metadata-stage>
+
+
+<match:metadata-stage value="forward-response cache-hit client-response">
+    <match:response.header name="X-Request-ID">
+        <assign:extract-value>
+            <variable-name>PMUSER_TMP</variable-name>
+            <location>Response_Header</location>
+            <location-id>X-Request-ID</location-id>
+        </assign:extract-value>
+        <assign:variable>
+            <name>PMUSER_LOG_ORIGIN_REQUESTID_V</name>
+            <value>%(PMUSER_TMP)</value>
+            <hidden>on</hidden>
+        </assign:variable>
+    </match:response.header>
+    <match:response.header name="Content-Type">
+        <assign:extract-value>
+            <variable-name>PMUSER_TMP</variable-name>
+            <location>Response_Header</location>
+            <location-id>Content-Type</location-id>
+        </assign:extract-value>
+        <assign:variable>
+            <name>PMUSER_LOG_CONTENT_TYPE_V</name>
+            <value>%(PMUSER_TMP)</value>
+            <hidden>on</hidden>
+        </assign:variable>
+    </match:response.header>
+</match:metadata-stage>
 
 <match:metadata-stage value="client-response">
     <assign:variable>
@@ -98,28 +134,10 @@
         <hidden>on</hidden>
     </assign:variable>
     <assign:variable>
-        <name>PMUSER_LOG_PCONN_V</name>
-        <value>:%(AK_CLIENT_REQUEST_NUMBER)</value>
-        <hidden>on</hidden>
-    </assign:variable>
-    <assign:variable>
         <name>PMUSER_LOG_FPCONN_V</name>
         <value>:%(AK_FWD_PCONN_USED)</value>
         <hidden>on</hidden>
     </assign:variable>
-
-    <match:response.header name="X-Request-ID">
-        <assign:extract-value>
-            <variable-name>TMP_LOG_REQUESTID</variable-name>
-            <location>Response_Header</location>
-            <location-id>X-Request-ID</location-id>
-        </assign:extract-value>
-        <assign:variable>
-            <name>PMUSER_LOG_ORIGIN_REQUESTID_V</name>
-            <value>%(TMP_LOG_REQUESTID)</value>
-            <hidden>on</hidden>
-        </assign:variable>
-    </match:response.header>
 
     <match:variable name="PMUSER_LOG_PREFIX" value="0 off false">
         <assign:variable>
