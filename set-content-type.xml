@@ -1,0 +1,26 @@
+<match:metadata-stage value="forward-response cache-hit client-response">
+    <match:response.header name="X-Request-ID">
+        <assign:extract-value>
+            <variable-name>PMUSER_TMP</variable-name>
+            <location>Response_Header</location>
+            <location-id>X-Request-ID</location-id>
+        </assign:extract-value>
+        <assign:variable>
+            <name>PMUSER_LOG_ORIGIN_REQUESTID_V</name>
+            <value>%(PMUSER_TMP)</value>
+            <hidden>on</hidden>
+        </assign:variable>
+    </match:response.header>
+    <match:response.header name="Content-Type">
+        <assign:extract-value>
+            <variable-name>PMUSER_TMP</variable-name>
+            <location>Response_Header</location>
+            <location-id>Content-Type</location-id>
+        </assign:extract-value>
+        <assign:variable>
+            <name>PMUSER_LOG_CONTENT_TYPE_V</name>
+            <value>%(PMUSER_TMP)</value>
+            <hidden>on</hidden>
+        </assign:variable>
+    </match:response.header>
+</match:metadata-stage>

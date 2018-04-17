@@ -1,0 +1,78 @@
+<match:metadata-stage value="client-request">
+    <assign:variable>
+        <name>PMUSER_LOG_PROTO_V</name>
+        <value>h1</value>
+        <hidden>on</hidden>
+    </assign:variable>
+    <assign:variable>
+        <name>PMUSER_LOG_SNI_V</name>
+        <value></value>
+        <hidden>on</hidden>
+    </assign:variable>
+
+    <match:request.protocol value="HTTPS">
+        <assign:variable>
+            <name>PMUSER_LOG_SNI_V</name>
+            <value>!</value>
+            <hidden>on</hidden>
+        </assign:variable>
+        <match:variable name="AK_TLS_SNI_NAME" value="EMPTY_STRING" result="false">
+            <assign:variable>
+                <name>PMUSER_LOG_SNI_V</name>
+                <value></value>
+                <hidden>on</hidden>
+            </assign:variable>
+        </match:variable>
+
+        <assign:variable>
+            <name>PMUSER_LOG_PROTO_V</name>
+            <value>tls</value>
+            <hidden>on</hidden>
+        </assign:variable>
+
+        <match:variable name="AK_PROTOCOL_NEGOTIATION" value="http2">
+            <assign:variable>
+                <name>PMUSER_LOG_PROTO_V</name>
+                <value>h2</value>
+                <hidden>on</hidden>
+            </assign:variable>
+        </match:variable>
+        <match:variable name="AK_PROTOCOL_NEGOTIATION" value="quic">
+            <assign:variable>
+                <name>PMUSER_LOG_PROTO_V</name>
+                <value>quic</value>
+                <hidden>on</hidden>
+            </assign:variable>
+        </match:variable>
+    </match:request.protocol>
+
+    <assign:variable>
+        <name>PMUSER_LOG_CLIENT_RTT_V</name>
+        <value>%(AK_CLIENT_RTT)</value>
+        <hidden>on</hidden>
+    </assign:variable>
+
+    <assign:variable>
+        <name>PMUSER_LOG_ARLID_V</name>
+        <value>%(AK_ARLID).%(AK_ARLVERSION)</value>
+        <hidden>on</hidden>
+    </assign:variable>
+
+    <assign:variable>
+        <name>PMUSER_LOG_CLIENT_PORT_V</name>
+        <value>%(AK_TRUE_CLIENT_PORT)</value>
+        <hidden>on</hidden>
+    </assign:variable>
+
+    <assign:variable>
+        <name>PMUSER_LOG_AK_REQUESTID_V</name>
+        <value>%(AK_REQUEST_ID)</value>
+        <hidden>on</hidden>
+    </assign:variable>
+
+    <assign:variable>
+        <name>PMUSER_LOG_PCONN_V</name>
+        <value>%(AK_CLIENT_REQUEST_NUMBER)</value>
+        <hidden>on</hidden>
+    </assign:variable>
+</match:metadata-stage>
