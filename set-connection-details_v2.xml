@@ -30,17 +30,10 @@
             <hidden>on</hidden>
         </assign:variable>
 
-        <match:variable name="AK_PROTOCOL_NEGOTIATION" value="http2">
+        <match:variable name="AK_PROTOCOL_NEGOTIATION" value="EMPTY_STRING" result="false">
             <assign:variable>
                 <name>PMUSER_LOG_PROTO_V</name>
-                <value>h2</value>
-                <hidden>on</hidden>
-            </assign:variable>
-        </match:variable>
-        <match:variable name="AK_PROTOCOL_NEGOTIATION" value="quic">
-            <assign:variable>
-                <name>PMUSER_LOG_PROTO_V</name>
-                <value>quic</value>
+                <value>%(AK_PROTOCOL_NEGOTIATION)</value>
                 <hidden>on</hidden>
             </assign:variable>
         </match:variable>
