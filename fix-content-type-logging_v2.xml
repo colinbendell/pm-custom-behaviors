@@ -1,0 +1,129 @@
+<match:metadata-stage value="client-request cache-hit forward-response client-response">
+    <match:metadata-stage value="client-request">
+        <assign:variable>
+            <name>PMUSER_CONTENT_TYPE_HEADER</name>
+            <value>Content-Type</value>
+        </assign:variable>
+    </match:metadata-stage>
+
+    <match:metadata-stage value="cache-hit forward-response">
+        <match:response.header name="X-Request-ID">
+            <match:variable name="PMUSER_ORIGIN_REQUESTID_V" result="false">
+                <assign:extract-value>
+                    <variable-name>PMUSER_ORIGIN_REQUESTID_V</variable-name>
+                    <location>Response_Header</location>
+                    <location-id>X-Request-ID</location-id>
+                    <hidden>on</hidden>
+                </assign:extract-value>
+            </match:variable>
+        </match:response.header>
+        <match:response.header name="Content-Type">
+            <match:variable name="PMUSER_CONTENT_TYPE_V" result="false">
+                <assign:extract-value>
+                    <variable-name>PMUSER_CONTENT_TYPE_V</variable-name>
+                    <location>Response_Header</location>
+                    <location-id>Content-Type</location-id>
+                    <hidden>on</hidden>
+                </assign:extract-value>
+            </match:variable>
+        </match:response.header>
+    </match:metadata-stage>
+
+    <!-- fix incoming Content-Type so that we replace ; with , -->
+    <!-- append ,id=$(request_id) if present -->
+    <match:metadata-stage value="forward-response">
+        <match:response.header name="content-type" value="*,id=*" result="false">
+
+        <match:variable name="PMUSER_CONTENT_TYPE_V">
+            <assign:variable>
+                <name>PMUSER_CONTENT_TYPE_V</name>
+                <value>%(PMUSER_CONTENT_TYPE_V)</value>
+                <hidden>off</hidden>
+                <sensitive>off</sensitive>
+                <transform>
+                    <substitute>
+                        <regex>[;,]id=[^;,]*</regex>
+                        <replacement/>
+                        <flags>g</flags>
+                    </substitute>
+                </transform>
+            </assign:variable>
+            <match:variable name="PMUSER_ORIGIN_REQUESTID_V">
+                <assign:variable>
+                    <name>PMUSER_CONTENT_TYPE_V</name>
+                    <value>%(PMUSER_CONTENT_TYPE_V),id=%(PMUSER_ORIGIN_REQUESTID_V)</value>
+                    <hidden>off</hidden>
+                    <sensitive>off</sensitive>
+                    <transform>
+                        <substitute>
+                            <regex>;</regex>
+                            <replacement>,</replacement>
+                            <flags>g</flags>
+                        </substitute>
+                    </transform>
+                </assign:variable>
+            </match:variable>
+            <match:variable name="PMUSER_DISABLE_CONTENT_TYPE_IN" result="false">
+                <edgeservices:modify-incoming-response.remove-header>
+                    <name>content-type</name>
+                    <status>on</status>
+                </edgeservices:modify-incoming-response.remove-header>
+                <edgeservices:modify-incoming-response.add-header>
+                    <name>content-type</name>
+                    <value>%(PMUSER_CONTENT_TYPE_V)</value>
+                    <status>on</status>
+                </edgeservices:modify-incoming-response.add-header>
+            </match:variable>
+        </match:variable>
+        </match:response.header>
+    </match:metadata-stage>
+
+    <!-- on the way out to the user fix incoming Content-Type so that we replace , with ; -->
+    <!-- and strip the ,id=$(request_id) if present -->
+    <match:metadata-stage value="client-response">
+        <match:response.header name="Content-Type">
+            <match:request.type value="CLIENT_REQ" result="true">
+                <assign:variable>
+                    <name>PMUSER_CONTENT_TYPE_V</name>
+                    <value>%(PMUSER_CONTENT_TYPE_V)</value>
+                    <hidden>on</hidden>
+                    <sensitive>off</sensitive>
+                    <transform>
+                        <substitute>
+                            <regex>[;,]id=[^;,]*</regex>
+                            <replacement/>
+                            <flags>g</flags>
+                        </substitute>
+                    </transform>
+                </assign:variable>
+                <assign:variable>
+                    <name>PMUSER_CONTENT_TYPE_V</name>
+                    <value>%(PMUSER_CONTENT_TYPE_V)</value>
+                    <hidden>on</hidden>
+                    <sensitive>off</sensitive>
+                    <transform>
+                        <substitute>
+                            <regex>,</regex>
+                            <replacement>;</replacement>
+                            <flags>g</flags>
+                        </substitute>
+                    </transform>
+                </assign:variable>
+            </match:request.type>
+
+            <match:variable name="PMUSER_DISABLE_CONTENT_TYPE_OUT" result="false">
+                <edgeservices:modify-outgoing-response.remove-header>
+                    <name>content-type</name>
+                    <status>on</status>
+                    <edge-only>off</edge-only>
+                </edgeservices:modify-outgoing-response.remove-header>
+                <edgeservices:modify-outgoing-response.add-header>
+                    <name>content-type</name>
+                    <value>%(PMUSER_CONTENT_TYPE_V)</value>
+                    <status>on</status>
+                    <edge-only>off</edge-only>
+                </edgeservices:modify-outgoing-response.add-header>
+            </match:variable>
+       </match:response.header>
+    </match:metadata-stage>
+</match:metadata-stage>
