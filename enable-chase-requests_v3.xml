@@ -13,31 +13,20 @@
                 <assign:extract-value>
                     <location>IPA_Response_Header</location>
                     <location-id>Location</location-id>
-                    <variable-name>TMP_LOCATION</variable-name>
-                </assign:extract-value>
-                <assign:variable>
-                    <name>PMUSER_REDIRECT_DEST</name>
-                    <value>%(TMP_LOCATION)</value>
                     <hidden>on</hidden>
-                    <sensitive>off</sensitive>
-                </assign:variable>
+                    <variable-name>PMUSER_REDIRECT_DEST</variable-name>
+                </assign:extract-value>
             </match:response.status>
             <match:response.status value="300:399" result="true">
                 <match:response.header name="Surrogate-Location">
                     <assign:extract-value>
                         <location>IPA_Response_Header</location>
                         <location-id>Surrogate-Location</location-id>
-                        <variable-name>TMP_LOCATION</variable-name>
-                    </assign:extract-value>
-                    <assign:variable>
-                        <name>PMUSER_REDIRECT_DEST</name>
-                        <value>%(TMP_LOCATION)</value>
                         <hidden>on</hidden>
-                        <sensitive>off</sensitive>
-                    </assign:variable>
+                        <variable-name>PMUSER_REDIRECT_DEST</variable-name>
+                    </assign:extract-value>
                 </match:response.header>
             </match:response.status>
-
             <match:variable name="PMUSER_REDIRECT_DEST">
                 <forward:availability.fail-action2>
                     <status>on</status>
@@ -56,31 +45,20 @@
                 <assign:extract-value>
                     <location>Response_Header</location>
                     <location-id>Location</location-id>
-                    <variable-name>TMP_LOCATION</variable-name>
-                </assign:extract-value>
-                <assign:variable>
-                    <name>PMUSER_REDIRECT_DEST</name>
-                    <value>%(TMP_LOCATION)</value>
                     <hidden>on</hidden>
-                    <sensitive>off</sensitive>
-                </assign:variable>
+                    <variable-name>PMUSER_REDIRECT_DEST</variable-name>
+                </assign:extract-value>
             </match:response.status>
             <match:response.status value="300:399" result="true">
                 <match:response.header name="Surrogate-Location">
                     <assign:extract-value>
                         <location>Response_Header</location>
                         <location-id>Surrogate-Location</location-id>
-                        <variable-name>TMP_LOCATION</variable-name>
-                    </assign:extract-value>
-                    <assign:variable>
-                        <name>PMUSER_REDIRECT_DEST</name>
-                        <value>%(TMP_LOCATION)</value>
                         <hidden>on</hidden>
-                        <sensitive>off</sensitive>
-                    </assign:variable>
+                        <variable-name>PMUSER_REDIRECT_DEST</variable-name>
+                    </assign:extract-value>
                 </match:response.header>
             </match:response.status>
-
             <match:variable name="PMUSER_REDIRECT_DEST">
                 <forward:availability.fail-action2>
                     <status>on</status>
