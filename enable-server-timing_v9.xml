@@ -47,12 +47,11 @@ PMUSER_SERVERTIMING_TOTAL_NAME = "total"
 
         <match:response.header name="X-Origin-Timing" result="false">
             <match:request.type value="CLIENT_REQ" result="false">
-                <edgeservices:modify-outgoing-response.add-header>
+                <edgeservices:modify-incoming-response.add-header>
                     <name>X-Origin-Timing</name>
                     <value>%(AK_FWD_MESSAGE_EXCHANGE_LATENCY)</value>
                     <status>on</status>
-                    <edge-only>off</edge-only>
-                </edgeservices:modify-outgoing-response.add-header>
+                </edgeservices:modify-incoming-response.add-header>
             </match:request.type>
             <assign:variable>
                 <name>PMUSER_SERVERTIMING_ORIGIN_DUR</name>
