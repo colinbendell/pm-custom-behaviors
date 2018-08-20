@@ -19,13 +19,26 @@ PMUSER_SERVERTIMING_TOTAL_NAME = "total"
                 <hidden>on</hidden>
             </assign:variable>
         </match:variable>
+        <match:variable name="PMUSER_SERVERTIMING_INC_START" result="false">
+            <assign:variable>
+                <name>PMUSER_SERVERTIMING_INC_START</name>
+                <value>yes</value>
+                <hidden>on</hidden>
+            </assign:variable>
+        </match:variable>
+        <match:variable name="PMUSER_SERVERTIMING_INC_TOTAL" result="false">
+            <assign:variable>
+                <name>PMUSER_SERVERTIMING_INT_TOTAL</name>
+                <value>yes</value>
+                <hidden>on</hidden>
+            </assign:variable>
+        </match:variable>
 
         <assign:variable>
             <name>PMUSER_SERVERTIMING_START</name>
             <value>%(AK_CURRENT_TIME_MS)</value>
             <hidden>on</hidden>
         </assign:variable>
-
         <!-- todo: remove req time-->
         <match:variable name="AK_CLIENT_REQUEST_END_TIME" value-in-range="1:" >
             <assign:variable>
@@ -39,6 +52,52 @@ PMUSER_SERVERTIMING_TOTAL_NAME = "total"
                 </transform>
             </assign:variable>
         </match:variable>
+
+        <match:request.header name="ServerTimingStart"  value-in-range="1:">
+            <assign:extract-value>
+                <location>Client_Request_Header</location>
+                <location-id>ServerTimingStart</location-id>
+                <location-id-prefix-match>off</location-id-prefix-match>
+                <variable-name>PMUSER_SERVERTIMING_START</variable-name>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+            </assign:extract-value>
+        </match:request.header>
+        <edgeservices:modify-incoming-request.remove-header>
+            <name>ServerTimingStart</name>
+            <status>on</status>
+        </edgeservices:modify-incoming-request.remove-header>
+        <edgeservices:modify-incoming-request.add-header>
+            <name>ServerTimingStart</name>
+            <value>%(PMUSER_SERVERTIMING_START)</value>
+            <status>on</status>
+        </edgeservices:modify-incoming-request.add-header>
+
+        <assign:variable>
+            <name>PMUSER_SERVERTIMING_START_ISO</name>
+            <value>%(PMUSER_SERVERTIMING_START)</value>
+            <hidden>on</hidden>
+            <transform>
+                <divide>
+                    <value>1000</value>
+                </divide>
+                <epoch-to-string>
+                    <format>%Y-%m-%dT%T</format>
+                </epoch-to-string>
+            </transform>
+        </assign:variable>
+
+        <assign:variable>
+            <name>PMUSER_SERVERTIMING_START_ISO</name>
+            <value>%(PMUSER_SERVERTIMING_START)</value>
+            <hidden>on</hidden>
+            <transform>
+                <substitute>
+                    <regex>.*(\d{3})$</regex>
+                    <replacement>%(PMUSER_SERVERTIMING_START_ISO).$1Z</replacement>
+                </substitute>
+            </transform>
+        </assign:variable>
     </match:metadata-stage>
 
 
@@ -46,13 +105,13 @@ PMUSER_SERVERTIMING_TOTAL_NAME = "total"
         <!-- at forward response, if resp header not present, set response header = AK_FWD_MESSAGE_EXCHANGE_LATENCY-->
 
         <match:response.header name="X-Origin-Timing" result="false">
-            <match:request.type value="CLIENT_REQ" result="false">
+            <match:forward.server-type value="CUSTOMER_ORIGIN">
                 <edgeservices:modify-incoming-response.add-header>
                     <name>X-Origin-Timing</name>
                     <value>%(AK_FWD_MESSAGE_EXCHANGE_LATENCY)</value>
                     <status>on</status>
                 </edgeservices:modify-incoming-response.add-header>
-            </match:request.type>
+            </match:forward.server-type>
             <assign:variable>
                 <name>PMUSER_SERVERTIMING_ORIGIN_DUR</name>
                 <value>%(AK_FWD_MESSAGE_EXCHANGE_LATENCY)</value>
@@ -73,7 +132,7 @@ PMUSER_SERVERTIMING_TOTAL_NAME = "total"
     <match:metadata-stage value="client-response">
         <!-- remove x-origin-timing if this came from cache -->
         <!-- remove x-origin-timing if going to client -->
-        <match:variable name="AK_CONTENT_SOURCE" value="*p* *o*" value-wildcard="on" result="false" >
+        <match:variable name="AK_CONTENT_SOURCE" value="*g* *p* *o*" value-wildcard="on" result="false" >
             <edgeservices:modify-outgoing-response.remove-header>
                 <name>X-Origin-Timing</name>
                 <status>on</status>
@@ -90,7 +149,7 @@ PMUSER_SERVERTIMING_TOTAL_NAME = "total"
 
             <!-- define total -->
             <assign:variable>
-                <name>ST_TOTAL</name>
+                <name>ST_DURATION</name>
                 <value>%(AK_CURRENT_TIME_MS)</value>
                 <hidden>on</hidden>
                 <transform>
@@ -102,14 +161,14 @@ PMUSER_SERVERTIMING_TOTAL_NAME = "total"
 
             <!-- define duration -->
             <assign:variable>
-                <name>ST_DURATION</name>
-                <value>%(ST_TOTAL)</value>
+                <name>ST_TOTAL</name>
+                <value>%(ST_DURATION)</value>
                 <hidden>on</hidden>
             </assign:variable>
             <match:variable name="PMUSER_SERVERTIMING_ORIGIN_DUR" value-in-range="1:">
                 <assign:variable>
                     <name>ST_DURATION</name>
-                    <value>%(ST_TOTAL)</value>
+                    <value>%(ST_DURATION)</value>
                     <hidden>on</hidden>
                     <transform>
                         <subtract>
@@ -119,29 +178,24 @@ PMUSER_SERVERTIMING_TOTAL_NAME = "total"
                 </assign:variable>
             </match:variable>
 
-            <!-- define start -->
-            <assign:variable>
-                <name>PMUSER_SERVERTIMING_START_ISO</name>
-                <value>%(PMUSER_SERVERTIMING_START)</value>
-                <hidden>on</hidden>
-                <transform>
-                    <epoch-to-string>
-                        <format>%Y-%m-%dT%T</format>
-                    </epoch-to-string>
-                </transform>
-            </assign:variable>
 
-            <assign:variable>
-                <name>PMUSER_SERVERTIMING_START</name>
-                <value>%(PMUSER_SERVERTIMING_START)</value>
-                <hidden>on</hidden>
-                <transform>
-                    <substitute>
-                        <regex>(\d{3})$</regex>
-                        <replacement>%(PMUSER_SERVERTIMING_START_ISO).$1Z</replacement>
-                    </substitute>
-                </transform>
-            </assign:variable>
+            <match:variable name="PMUSER_SERVERTIMING_INC_TOTAL" value="yes on 1">
+                <match:variable name="ST_TOTAL" value-in-range="1:">
+                    <assign:variable>
+                        <name>ST_TOTAL_V</name>
+                        <value>%(PMUSER_SERVERTIMING_TOTAL_NAME)=%(ST_TOTAL);</value>
+                        <hidden>on</hidden>
+                    </assign:variable>
+                </match:variable>
+            </match:variable>
+            <match:variable name="PMUSER_SERVERTIMING_INC_START" value="yes on 1">
+                <assign:variable>
+                    <name>ST_START_V</name>
+                    <value>%(PMUSER_SERVERTIMING_START_NAME)=%(PMUSER_SERVERTIMING_START_ISO);</value>
+                    <hidden>on</hidden>
+                </assign:variable>
+            </match:variable>
+            <!-- define start -->
 
             <match:variable name="PMUSER_IS_CACHE_HIT" value="1">
                 <assign:variable>
@@ -167,7 +221,7 @@ PMUSER_SERVERTIMING_TOTAL_NAME = "total"
 
             <assign:variable>
                 <name>PMUSER_SERVERTIMING</name>
-                <value>%(PMUSER_SERVERTIMING)akam;dur=%(ST_DURATION);%(PMUSER_SERVERTIMING_START_NAME)=%(PMUSER_SERVERTIMING_START);%(PMUSER_SERVERTIMING_TOTAL_NAME)=%(ST_TOTAL);desc=%(PMUSER_SERVERTIMING_DESC_V),akam_id;desc=%(AK_REQUEST_ID)</value>
+                <value>%(PMUSER_SERVERTIMING)akam;dur=%(ST_DURATION);%(ST_START_V)%(ST_TOTAL_V)desc=%(PMUSER_SERVERTIMING_DESC_V)</value>
                 <hidden>on</hidden>
             </assign:variable>
             <edgeservices:modify-outgoing-response.add-header>
