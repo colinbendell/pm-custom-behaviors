@@ -1,54 +1,51 @@
+<!-- test for value set -->
+<!-- ipa redirect -->
 <match:metadata-stage value="ipa-response cache-hit forward-response client-response">
-    <match:variable name="PMUSER_ENABLE_CHASE" result="false">
+    <match:variable name="PMUSER_ENABLE_CHASE" value="?*" value-wildcard="on" result="false">
         <assign:variable>
             <name>PMUSER_ENABLE_CHASE</name>
-            <value>all</value>
+            <value>ipa client</value>
             <hidden>on</hidden>
         </assign:variable>
     </match:variable>
 
     <match:metadata-stage value="ipa-response">
-        <match:variable name="PMUSER_ENABLE_CHASE" value="all *ipa*" value-wildcard="true">
-            <match:response.status value="303" result="true">
-                <assign:extract-value>
-                    <location>IPA_Response_Header</location>
-                    <location-id>Location</location-id>
-                    <hidden>on</hidden>
-                    <variable-name>PMUSER_REDIRECT_DEST</variable-name>
-                </assign:extract-value>
-            </match:response.status>
+        <match:variable name="PMUSER_ENABLE_CHASE" value="all *ipa*" value-wildcard="on">
+            <match:variable name="PMUSER_ENABLE_CHASE" value="all *ipalegacy*" value-wildcard="on">
+                <match:response.status value="301:303" result="true">
+                    <assign:extract-value>
+                        <location>IPA_Response_Header</location>
+                        <location-id>Location</location-id>
+                        <hidden>on</hidden>
+                        <variable-name>PMUSER_IPA_REDIRECT_DEST</variable-name>
+                    </assign:extract-value>
+                </match:response.status>
+            </match:variable>
             <match:response.status value="300:399" result="true">
                 <match:response.header name="Surrogate-Location">
                     <assign:extract-value>
                         <location>IPA_Response_Header</location>
                         <location-id>Surrogate-Location</location-id>
                         <hidden>on</hidden>
-                        <variable-name>PMUSER_REDIRECT_DEST</variable-name>
+                        <variable-name>PMUSER_IPA_REDIRECT_DEST</variable-name>
                     </assign:extract-value>
                 </match:response.header>
             </match:response.status>
-            <match:variable name="PMUSER_REDIRECT_DEST">
-                <forward:availability.fail-action2>
-                    <status>on</status>
-                    <type>serve-alternate</type>
-                    <request-host>%(AK_HOST)</request-host>
-                    <path>%(PMUSER_REDIRECT_DEST)</path>
-                    <preserve-query-string>on</preserve-query-string>
-                </forward:availability.fail-action2>
-            </match:variable>
         </match:variable>
     </match:metadata-stage>
 
     <match:metadata-stage value="cache-hit forward-response client-response">
-        <match:variable name="PMUSER_ENABLE_CHASE" value="all *client*" value-wildcard="true">
-            <match:response.status value="303" result="true">
-                <assign:extract-value>
-                    <location>Response_Header</location>
-                    <location-id>Location</location-id>
-                    <hidden>on</hidden>
-                    <variable-name>PMUSER_REDIRECT_DEST</variable-name>
-                </assign:extract-value>
-            </match:response.status>
+        <match:variable name="PMUSER_ENABLE_CHASE" value="all *client*" value-wildcard="on">
+            <match:variable name="PMUSER_ENABLE_CHASE" value="all *clientlegacy*" value-wildcard="on">
+                <match:response.status value="301:303" result="true">
+                    <assign:extract-value>
+                        <location>Response_Header</location>
+                        <location-id>Location</location-id>
+                        <hidden>on</hidden>
+                        <variable-name>PMUSER_REDIRECT_DEST</variable-name>
+                    </assign:extract-value>
+                </match:response.status>
+            </match:variable>
             <match:response.status value="300:399" result="true">
                 <match:response.header name="Surrogate-Location">
                     <assign:extract-value>
@@ -59,7 +56,11 @@
                     </assign:extract-value>
                 </match:response.header>
             </match:response.status>
-            <match:variable name="PMUSER_REDIRECT_DEST">
+        </match:variable>
+    </match:metadata-stage>
+    <match:metadata-stage value="client-response">
+        <match:variable name="PMUSER_IPA_REDIRECT_DEST" value="?*" value-wildcard="on" result="false">
+            <match:variable name="PMUSER_REDIRECT_DEST" value="?*" value-wildcard="on">
                 <forward:availability.fail-action2>
                     <status>on</status>
                     <type>serve-alternate</type>
@@ -68,6 +69,15 @@
                     <preserve-query-string>on</preserve-query-string>
                 </forward:availability.fail-action2>
             </match:variable>
+        </match:variable>
+        <match:variable name="PMUSER_IPA_REDIRECT_DEST" value="?*" value-wildcard="on">
+            <forward:availability.fail-action2>
+                <status>on</status>
+                <type>serve-alternate</type>
+                <request-host>%(AK_HOST)</request-host>
+                <path>%(PMUSER_IPA_REDIRECT_DEST)</path>
+                <preserve-query-string>on</preserve-query-string>
+            </forward:availability.fail-action2>
         </match:variable>
     </match:metadata-stage>
 </match:metadata-stage>
