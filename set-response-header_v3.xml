@@ -1,65 +1,132 @@
 <match:metadata-stage value="ipa-response cache-hit forward-response client-response">
-    <match:response.header name="Surrogate-Location">
-        <assign:extract-value>
-            <location>Response_Header</location>
-            <location-id>Surrogate-Location</location-id>
-            <variable-name>PMUSER_SURROGATE_LOCATION</variable-name>
-            <hidden>on</hidden>
-            <sensitive>off</sensitive>
-        </assign:extract-value>
-    </match:response.header>
-    <match:response.header name="Surrogate-ACL">
-        <assign:extract-value>
-            <location>Response_Header</location>
-            <location-id>Surrogate-ACL</location-id>
-            <variable-name>PMUSER_SURROGATE_ACL</variable-name>
-            <hidden>on</hidden>
-            <sensitive>off</sensitive>
-        </assign:extract-value>
-    </match:response.header>
-    <match:response.header name="Surrogate-Access">
-        <assign:extract-value>
-            <location>Response_Header</location>
-            <location-id>Surrogate-Access</location-id>
-            <variable-name>PMUSER_SURROGATE_ACCESS</variable-name>
-            <hidden>on</hidden>
-            <sensitive>off</sensitive>
-        </assign:extract-value>
-    </match:response.header>
-    <match:response.header name="Surrogate-Settings">
-        <assign:extract-value>
-            <location>Response_Header</location>
-            <location-id>Surrogate-Settings</location-id>
-            <variable-name>PMUSER_SURROGATE_SETTINGS</variable-name>
-            <hidden>on</hidden>
-            <sensitive>off</sensitive>
-        </assign:extract-value>
-    </match:response.header>
-    <match:response.header name="Surrogate-Vary">
-        <assign:extract-value>
-            <location>Response_Header</location>
-            <location-id>Surrogate-Vary</location-id>
-            <variable-name>PMUSER_SURROGATE_VARY</variable-name>
-            <hidden>on</hidden>
-            <sensitive>off</sensitive>
-        </assign:extract-value>
-    </match:response.header>
-    <match:response.header name="Surrogate-Variant">
-        <assign:extract-value>
-            <location>Response_Header</location>
-            <location-id>Surrogate-Variant</location-id>
-            <variable-name>PMUSER_SURROGATE_VARIANT</variable-name>
-            <hidden>on</hidden>
-            <sensitive>off</sensitive>
-        </assign:extract-value>
-    </match:response.header>
-    <match:response.header name="Surrogate-Control">
-        <assign:extract-value>
-            <location>Response_Header</location>
-            <location-id>Surrogate-Control</location-id>
-            <variable-name>PMUSER_SURROGATE_CONTROL</variable-name>
-            <hidden>on</hidden>
-            <sensitive>off</sensitive>
-        </assign:extract-value>
-    </match:response.header>
+    <match:metadata-stage value="ipa-response">
+        <match:response.header name="Surrogate-Location">
+            <assign:extract-value>
+                <location>IPA_Response_Header</location>
+                <location-id>Surrogate-Location</location-id>
+                <variable-name>PMUSER_IPA_SURROGATE_LOCATION</variable-name>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+            </assign:extract-value>
+        </match:response.header>
+        <match:response.header name="Surrogate-ACL">
+            <assign:extract-value>
+                <location>IPA_Response_Header</location>
+                <location-id>Surrogate-ACL</location-id>
+                <variable-name>PMUSER_IPA_SURROGATE_ACL</variable-name>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+            </assign:extract-value>
+        </match:response.header>
+        <match:response.header name="Surrogate-Access">
+            <assign:extract-value>
+                <location>IPA_Response_Header</location>
+                <location-id>Surrogate-Access</location-id>
+                <variable-name>PMUSER_IPA_SURROGATE_ACCESS</variable-name>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+            </assign:extract-value>
+        </match:response.header>
+        <match:response.header name="Surrogate-Settings">
+            <assign:extract-value>
+                <location>IPA_Response_Header</location>
+                <location-id>Surrogate-Settings</location-id>
+                <variable-name>PMUSER_IPA_SURROGATE_SETTINGS</variable-name>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+            </assign:extract-value>
+        </match:response.header>
+        <match:response.header name="Surrogate-Vary">
+            <assign:extract-value>
+                <location>IPA_Response_Header</location>
+                <location-id>Surrogate-Vary</location-id>
+                <variable-name>PMUSER_IPA_SURROGATE_VARY</variable-name>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+            </assign:extract-value>
+        </match:response.header>
+        <match:response.header name="Surrogate-Variant">
+            <assign:extract-value>
+                <location>IPA_Response_Header</location>
+                <location-id>Surrogate-Variant</location-id>
+                <variable-name>PMUSER_IPA_SURROGATE_VARIANT</variable-name>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+            </assign:extract-value>
+        </match:response.header>
+        <match:response.header name="Surrogate-Control">
+            <assign:extract-value>
+                <location>IPA_Response_Header</location>
+                <location-id>Surrogate-Control</location-id>
+                <variable-name>PMUSER_IPA_SURROGATE_CONTROL</variable-name>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+            </assign:extract-value>
+        </match:response.header>
+    </match:metadata-stage>
+    <match:metadata-stage value="cache-hit forward-response client-response">
+        <match:response.header name="Surrogate-Location">
+            <assign:extract-value>
+                <location>Response_Header</location>
+                <location-id>Surrogate-Location</location-id>
+                <variable-name>PMUSER_SURROGATE_LOCATION</variable-name>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+            </assign:extract-value>
+        </match:response.header>
+        <match:response.header name="Surrogate-ACL">
+            <assign:extract-value>
+                <location>Response_Header</location>
+                <location-id>Surrogate-ACL</location-id>
+                <variable-name>PMUSER_SURROGATE_ACL</variable-name>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+            </assign:extract-value>
+        </match:response.header>
+        <match:response.header name="Surrogate-Access">
+            <assign:extract-value>
+                <location>Response_Header</location>
+                <location-id>Surrogate-Access</location-id>
+                <variable-name>PMUSER_SURROGATE_ACCESS</variable-name>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+            </assign:extract-value>
+        </match:response.header>
+        <match:response.header name="Surrogate-Settings">
+            <assign:extract-value>
+                <location>Response_Header</location>
+                <location-id>Surrogate-Settings</location-id>
+                <variable-name>PMUSER_SURROGATE_SETTINGS</variable-name>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+            </assign:extract-value>
+        </match:response.header>
+        <match:response.header name="Surrogate-Vary">
+            <assign:extract-value>
+                <location>Response_Header</location>
+                <location-id>Surrogate-Vary</location-id>
+                <variable-name>PMUSER_SURROGATE_VARY</variable-name>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+            </assign:extract-value>
+        </match:response.header>
+        <match:response.header name="Surrogate-Variant">
+            <assign:extract-value>
+                <location>Response_Header</location>
+                <location-id>Surrogate-Variant</location-id>
+                <variable-name>PMUSER_SURROGATE_VARIANT</variable-name>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+            </assign:extract-value>
+        </match:response.header>
+        <match:response.header name="Surrogate-Control">
+            <assign:extract-value>
+                <location>Response_Header</location>
+                <location-id>Surrogate-Control</location-id>
+                <variable-name>PMUSER_SURROGATE_CONTROL</variable-name>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+            </assign:extract-value>
+        </match:response.header>
+    </match:metadata-stage>
 </match:metadata-stage>
