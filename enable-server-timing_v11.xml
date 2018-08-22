@@ -28,7 +28,7 @@ PMUSER_SERVERTIMING_TOTAL_NAME = "total"
         </match:variable>
         <match:variable name="PMUSER_SERVERTIMING_INC_TOTAL" result="false">
             <assign:variable>
-                <name>PMUSER_SERVERTIMING_INT_TOTAL</name>
+                <name>PMUSER_SERVERTIMING_INC_TOTAL</name>
                 <value>yes</value>
                 <hidden>on</hidden>
             </assign:variable>
@@ -221,7 +221,7 @@ PMUSER_SERVERTIMING_TOTAL_NAME = "total"
 
             <assign:variable>
                 <name>PMUSER_SERVERTIMING</name>
-                <value>%(PMUSER_SERVERTIMING)akam;dur=%(ST_DURATION);%(ST_START_V)%(ST_TOTAL_V)desc=%(PMUSER_SERVERTIMING_DESC_V)</value>
+                <value>akam;dur=%(ST_DURATION);%(ST_START_V)%(ST_TOTAL_V)desc=%(PMUSER_SERVERTIMING_DESC_V)%(PMUSER_SERVERTIMING)</value>
                 <hidden>on</hidden>
             </assign:variable>
             <edgeservices:modify-outgoing-response.add-header>
