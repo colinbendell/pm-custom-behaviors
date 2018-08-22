@@ -11,7 +11,7 @@
 
     <match:metadata-stage value="ipa-response">
         <match:variable name="PMUSER_ENABLE_CHASE" value="all *ipa*" value-wildcard="on">
-            <match:variable name="PMUSER_ENABLE_CHASE" value="all *ipalegacy*" value-wildcard="on">
+            <match:variable name="PMUSER_ENABLE_CHASE" value="all *ilegacy*" value-wildcard="on">
                 <match:response.status value="301:303" result="true">
                     <assign:extract-value>
                         <location>IPA_Response_Header</location>
@@ -36,7 +36,7 @@
 
     <match:metadata-stage value="cache-hit forward-response client-response">
         <match:variable name="PMUSER_ENABLE_CHASE" value="all *client*" value-wildcard="on">
-            <match:variable name="PMUSER_ENABLE_CHASE" value="all *clientlegacy*" value-wildcard="on">
+            <match:variable name="PMUSER_ENABLE_CHASE" value="all *clegacy*" value-wildcard="on">
                 <match:response.status value="301:303" result="true">
                     <assign:extract-value>
                         <location>Response_Header</location>
