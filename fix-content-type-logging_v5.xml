@@ -50,12 +50,9 @@
                 </assign:extract-value>
             </match:variable>
         </match:response.header>
-    </match:metadata-stage>
-
-    <!-- fix incoming Content-Type so that we replace ; with , -->
-    <!-- append ,id=$(request_id) if present -->
-    <match:metadata-stage value="forward-response">
-        <match:response.header name="Content-Type" value="*,id* *,?id=* *,*" value-wildcard="on" result="false">
+        <match:response.header name="Content-Type" value="*,id* *,?id=* *,* EMPTY_STRING" value-wildcard="on" result="false">
+            <!-- fix incoming Content-Type so that we replace ; with , -->
+            <!-- append ,id=$(request_id) if present -->
             <match:variable name="PMUSER_CONTENT_TYPE_V" value="?*" value-wildcard="on">
                 <assign:variable>
                     <name>PMUSER_CONTENT_TYPE_V</name>
@@ -102,38 +99,64 @@
                         <sensitive>off</sensitive>
                     </assign:variable>
                 </match:variable>
-                <match:variable name="PMUSER_DISABLE_CONTENT_TYPE_IN" result="false">
-                    <!-- Finally verify that we are going to change the content-type -->
-                    <match:variable name="PMUSER_CONTENT_TYPE_V" value="*,id* *,?id=* *,*" value-wildcard="on">
-                        <edgeservices:modify-incoming-response.remove-header>
-                            <name>Content-Type</name>
-                            <status>on</status>
-                        </edgeservices:modify-incoming-response.remove-header>
-                        <edgeservices:modify-incoming-response.add-header>
-                            <name>Content-Type</name>
-                            <value>%(PMUSER_CONTENT_TYPE_V)</value>
-                            <status>on</status>
-                        </edgeservices:modify-incoming-response.add-header>
-                    </match:variable>
+            </match:variable>
+            <match:variable name="PMUSER_DISABLE_CONTENT_TYPE_IN" value="?*" value-wildcard="on" result="false">
+                <!-- Finally verify that we are going to change the content-type -->
+                <match:variable name="PMUSER_CONTENT_TYPE_V" value="?*,id* ?*,?id=* ?*,*" value-wildcard="on">
+                    <edgeservices:modify-incoming-response.remove-header>
+                        <name>Content-Type</name>
+                        <status>on</status>
+                    </edgeservices:modify-incoming-response.remove-header>
+                    <edgeservices:modify-incoming-response.add-header>
+                        <name>Content-Type</name>
+                        <value>%(PMUSER_CONTENT_TYPE_V)</value>
+                        <status>on</status>
+                    </edgeservices:modify-incoming-response.add-header>
+                    <assign:variable>
+                        <name>PMUSER_ENABLE_CT_FIX</name>
+                        <value>1</value>
+                        <hidden>on</hidden>
+                        <sensitive>off</sensitive>
+                    </assign:variable>
                 </match:variable>
             </match:variable>
         </match:response.header>
     </match:metadata-stage>
 
+    <match:metadata-stage value="client-response">
+        <match:request.type value="CLIENT_REQ" result="false">
+            <match:variable name="PMUSER_ENABLE_CT_FIX" value="1 on yes">
+                <match:variable name="PMUSER_DISABLE_CONTENT_TYPE_OUT" value="?*" value-wildcard="on" result="false">
+                    <edgeservices:modify-outgoing-response.remove-header>
+                        <name>Content-Type</name>
+                        <status>on</status>
+                        <edge-only>off</edge-only>
+                    </edgeservices:modify-outgoing-response.remove-header>
+                    <edgeservices:modify-outgoing-response.add-header>
+                        <name>Content-Type</name>
+                        <value>%(PMUSER_CONTENT_TYPE_V)</value>
+                        <status>on</status>
+                        <edge-only>off</edge-only>
+                    </edgeservices:modify-outgoing-response.add-header>
+                </match:variable>
+            </match:variable>
+        </match:request.type>
+    </match:metadata-stage>
+
     <!-- on the way out to the user fix incoming Content-Type so that we replace , with ; -->
     <!-- and strip the ,id=$(request_id) if present -->
     <match:metadata-stage value="client-response">
-        <match:response.header name="Content-Type" value="*,id* *,?id=* *,*" value-wildcard="on">
-            <match:request.type value="CLIENT_REQ" result="true">
+        <match:request.type value="CLIENT_REQ" result="true">
+            <match:response.header name="Content-Type" value="?*,id* ?*,?id=* ?*,*" value-wildcard="on">
                 <match:variable name="PMUSER_CONTENT_TYPE_V" value="?*" value-wildcard="on" result="false">
+                    <!-- should not get here -->
                     <assign:extract-value>
-                        <variable-name>PMUSER_CONTENT_TYPE_V</variable-name>
+                        <variable-name>PMUSER_CONTEN T_TYPE_V</variable-name>
                         <location>Response_Header</location>
                         <location-id>Content-Type</location-id>
                         <hidden>on</hidden>
                     </assign:extract-value>
                 </match:variable>
-
                 <assign:variable>
                     <name>PMUSER_CONTENT_TYPE_V</name>
                     <value>%(PMUSER_CONTENT_TYPE_V)</value>
@@ -152,10 +175,7 @@
                         </substitute>
                     </transform>
                 </assign:variable>
-            </match:request.type>
-
-            <match:variable name="PMUSER_DISABLE_CONTENT_TYPE_OUT" value="?*" value-wildcard="on" result="false">
-                <match:variable name="PMUSER_CONTENT_TYPE_V" value="*,id* *,?id=* *,*" value-wildcard="on" result="false">
+                <match:variable name="PMUSER_DISABLE_CONTENT_TYPE_OUT" value="?*" value-wildcard="on" result="false">
                     <edgeservices:modify-outgoing-response.remove-header>
                         <name>Content-Type</name>
                         <status>on</status>
@@ -168,7 +188,7 @@
                         <edge-only>off</edge-only>
                     </edgeservices:modify-outgoing-response.add-header>
                 </match:variable>
-            </match:variable>
-       </match:response.header>
+            </match:response.header>
+        </match:request.type>
     </match:metadata-stage>
 </match:metadata-stage>
