@@ -1,0 +1,8 @@
+<match:variable name="PMUSER_ORIGIN_DNS" value="?*" value-wildcard="on">
+    <forward:origin-server>
+        <dns-name>
+            <status>on</status>
+            <value>%(PMUSER_ORIGIN_DNS)</value>
+        </dns-name>
+    </forward:origin-server>
+</match:variable>

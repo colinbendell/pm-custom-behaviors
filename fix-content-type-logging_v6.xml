@@ -50,6 +50,26 @@
                 </assign:extract-value>
             </match:variable>
         </match:response.header>
+        <match:response.header name="Surrogate-Key">
+            <match:variable name="PMUSER_ORIGIN_KEY" value="?*" value-wildcard="on" result="false">
+                <assign:extract-value>
+                    <variable-name>PMUSER_ORIGIN_KEY</variable-name>
+                    <location>Response_Header</location>
+                    <location-id>Surrogate-Key</location-id>
+                    <hidden>on</hidden>
+                </assign:extract-value>
+            </match:variable>
+        </match:response.header>
+        <match:response.header name="Edge-Cache-Tag">
+            <match:variable name="PMUSER_ORIGIN_KEY" value="?*" value-wildcard="on" result="false">
+                <assign:extract-value>
+                    <variable-name>PMUSER_ORIGIN_KEY</variable-name>
+                    <location>Response_Header</location>
+                    <location-id>Edge-Cache-Tag</location-id>
+                    <hidden>on</hidden>
+                </assign:extract-value>
+            </match:variable>
+        </match:response.header>
         <match:response.header name="Content-Type" value="*,id* *,?id=* *,* EMPTY_STRING" value-wildcard="on" result="false">
             <!-- fix incoming Content-Type so that we replace ; with , -->
             <!-- append ,id=$(request_id) if present -->
@@ -95,6 +115,27 @@
                     <assign:variable>
                         <name>PMUSER_CONTENT_TYPE_V</name>
                         <value>%(PMUSER_CONTENT_TYPE_V),did=%(PMUSER_ORIGIN_DID_V)</value>
+                        <hidden>on</hidden>
+                        <sensitive>off</sensitive>
+                    </assign:variable>
+                </match:variable>
+                <match:variable name="PMUSER_ORIGIN_KEY" value="?*" value-wildcard="on">
+                    <assign:variable>
+                        <name>PMUSER_ORIGIN_KEY</name>
+                        <value>%(PMUSER_ORIGIN_KEY)</value>
+                        <hidden>on</hidden>
+                        <sensitive>off</sensitive>
+                        <transform>
+                            <substitute>
+                                <regex>[ ,;.]*</regex>
+                                <replacement/>
+                                <flags>g</flags>
+                            </substitute>
+                        </transform>
+                    </assign:variable>
+                    <assign:variable>
+                        <name>PMUSER_CONTENT_TYPE_V</name>
+                        <value>%(PMUSER_CONTENT_TYPE_V),key=%(PMUSER_ORIGIN_KEY)</value>
                         <hidden>on</hidden>
                         <sensitive>off</sensitive>
                     </assign:variable>
