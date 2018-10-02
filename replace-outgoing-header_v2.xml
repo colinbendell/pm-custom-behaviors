@@ -1,11 +1,11 @@
 <match:metadata-stage value="client-response">
     <match:variable name="PMUSER_HEADER_NAME" value="?*" value-wildcard="on">
+        <edgeservices:modify-outgoing-response.remove-header>
+            <name>%(PMUSER_HEADER_NAME)</name>
+            <status>on</status>
+            <edge-only>off</edge-only>
+        </edgeservices:modify-outgoing-response.remove-header>
         <match:variable name="PMUSER_HEADER_VALUE" value="?*" value-wildcard="on">
-            <edgeservices:modify-outgoing-response.remove-header>
-                <name>%(PMUSER_HEADER_NAME)</name>
-                <status>on</status>
-                <edge-only>off</edge-only>
-            </edgeservices:modify-outgoing-response.remove-header>
             <edgeservices:modify-outgoing-response.add-header>
                 <name>%(PMUSER_HEADER_NAME)</name>
                 <value>%(PMUSER_HEADER_VALUE)</value>

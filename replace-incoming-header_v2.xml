@@ -1,0 +1,15 @@
+<match:metadata-stage value="forward-response">
+    <match:variable name="PMUSER_IN_HEADER_NAME" value="?*" value-wildcard="on">
+        <edgeservices:modify-incoming-response.remove-header>
+            <name>%(PMUSER_IN_HEADER_NAME)</name>
+            <status>on</status>
+        </edgeservices:modify-incoming-response.remove-header>
+        <match:variable name="PMUSER_IN_HEADER_VALUE" value="?*" value-wildcard="on">
+            <edgeservices:modify-incoming-response.add-header>
+                <name>%(PMUSER_IN_HEADER_NAME)</name>
+                <value>%(PMUSER_IN_HEADER_VALUE)</value>
+                <status>on</status>
+            </edgeservices:modify-incoming-response.add-header>
+        </match:variable>
+    </match:variable>
+</match:metadata-stage>
