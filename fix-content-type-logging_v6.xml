@@ -128,7 +128,7 @@
                         <transform>
                             <substitute>
                                 <regex>[ ,;.]*</regex>
-                                <replacement/>
+                                <replacement>_</replacement>
                                 <flags>g</flags>
                             </substitute>
                         </transform>
