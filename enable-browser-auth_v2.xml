@@ -3,11 +3,11 @@
     <escape-hmac-inputs>on</escape-hmac-inputs>
     <verify>
         <key>%(PMUSER_TOKENKEY)</key>
-        <url>%(AK_PATH)</url>
+        <url>%(PMUSER_AUTH_PATH)</url>
         <token>%(PMUSER_TOKEN)</token>
         <!--disable automatic error responses -->
         <failure-response>off</failure-response>
-        <!--extract the result of this verification into CLDTOKEN_* variables -->
-        <variable-prefix>PMUSER_CLDTOKEN</variable-prefix>
+        <!--extract the result of this verification into PMUSER_AUTH_RESULT_* variables -->
+        <variable-prefix>PMUSER_AUTH_RESULT</variable-prefix>
     </verify>
 </auth:browser.token>
