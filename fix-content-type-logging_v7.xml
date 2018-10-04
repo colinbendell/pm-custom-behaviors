@@ -205,7 +205,7 @@
                     <sensitive>off</sensitive>
                     <transform>
                         <substitute>
-                            <regex>[;,][trd]?id=[^;,]*</regex>
+                            <regex>[;,][trdk]?[ie][dy]=[^;,]*</regex>
                             <replacement/>
                             <flags>g</flags>
                         </substitute>
