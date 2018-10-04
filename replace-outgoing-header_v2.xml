@@ -10,7 +10,7 @@
                 <name>%(PMUSER_HEADER_NAME)</name>
                 <value>%(PMUSER_HEADER_VALUE)</value>
                 <status>on</status>
-                <edge-onlfy>off</edge-onlfy>
+                <edge-only>off</edge-only>
             </edgeservices:modify-outgoing-response.add-header>
         </match:variable>
     </match:variable>

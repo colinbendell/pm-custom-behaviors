@@ -192,7 +192,7 @@
                 <match:variable name="PMUSER_CONTENT_TYPE_V" value="?*" value-wildcard="on" result="false">
                     <!-- should not get here -->
                     <assign:extract-value>
-                        <variable-name>PMUSER_CONTEN T_TYPE_V</variable-name>
+                        <variable-name>PMUSER_CONTENT_TYPE_V</variable-name>
                         <location>Response_Header</location>
                         <location-id>Content-Type</location-id>
                         <hidden>on</hidden>
