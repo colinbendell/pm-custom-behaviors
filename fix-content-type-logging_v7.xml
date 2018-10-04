@@ -70,7 +70,7 @@
                 </assign:extract-value>
             </match:variable>
         </match:response.header>
-        <match:response.header name="Content-Type" value="*,id* *,?id=* *,* EMPTY_STRING" value-wildcard="on" result="false">
+        <match:response.header name="Content-Type" value="*,key* *,id* *,?id=* *,* EMPTY_STRING" value-wildcard="on" result="false">
             <!-- fix incoming Content-Type so that we replace ; with , -->
             <!-- append ,id=$(request_id) if present -->
             <match:variable name="PMUSER_CONTENT_TYPE_V" value="?*" value-wildcard="on">
@@ -143,7 +143,7 @@
             </match:variable>
             <match:variable name="PMUSER_DISABLE_CONTENT_TYPE_IN" value="?*" value-wildcard="on" result="false">
                 <!-- Finally verify that we are going to change the content-type -->
-                <match:variable name="PMUSER_CONTENT_TYPE_V" value="?*,id* ?*,?id=* ?*,*" value-wildcard="on">
+                <match:variable name="PMUSER_CONTENT_TYPE_V" value="?*,key* ?*,id* ?*,?id=* ?*,*" value-wildcard="on">
                     <edgeservices:modify-incoming-response.remove-header>
                         <name>Content-Type</name>
                         <status>on</status>
@@ -188,7 +188,7 @@
     <!-- and strip the ,id=$(request_id) if present -->
     <match:metadata-stage value="client-response">
         <match:request.type value="CLIENT_REQ" result="true">
-            <match:response.header name="Content-Type" value="?*,id* ?*,?id=* ?*,*" value-wildcard="on">
+            <match:response.header name="Content-Type" value="?*,key* ?*,id* ?*,?id=* ?*,*" value-wildcard="on">
                 <match:variable name="PMUSER_CONTENT_TYPE_V" value="?*" value-wildcard="on" result="false">
                     <!-- should not get here -->
                     <assign:extract-value>
