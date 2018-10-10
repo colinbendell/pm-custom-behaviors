@@ -1,4 +1,30 @@
 <match:metadata-stage value="client-response">
+    <match:variable name="PMUSER_MODIFY_OUTGOING_KEY" value="?*" value-wildcard="on">
+        <match:variable name="PMUSER_MODIFY_OUTGOING_NONCE" value="?*" value-wildcard="on">
+            <assign:variable>
+                <name>PMUSER_MODIFY_OUTGOING_NONCE</name>
+                <value>101010</value>
+                <hidden>on</hidden>
+            </assign:variable>
+        </match:variable>
+        <match:variable name="PMUSER_SURROGATE_SETTINGS" value="?*" value-wildcard="on">
+            <assign:variable>
+                <name>PMUSER_MODIFY_OUTGOING_ENC</name>
+                <value>%(PMUSER_SURROGATE_SETTINGS)</value>
+                <hidden>on</hidden>
+                <transform>
+                    <encrypt>
+                        <algorithm>AES256</algorithm>
+                        <key>%(PMUSER_MODIFY_OUTGOING_KEY)</key>
+                        <mode>CBC</mode>
+                        <nonce>%(PMUSER_MODIFY_OUTGOING_NONCE)</nonce>
+                        <prepend-bytes>on</prepend-bytes>
+                    </encrypt>
+                    <base64Encode/>
+                </transform>
+            </assign:variable>
+        </match:variable>
+    </match:variable>
     <match:variable name="PMUSER_HEADER_NAME" value="?*" value-wildcard="on">
         <edgeservices:modify-outgoing-response.remove-header>
             <name>%(PMUSER_HEADER_NAME)</name>
@@ -8,7 +34,7 @@
         <match:variable name="PMUSER_HEADER_VALUE" value="?*" value-wildcard="on">
             <edgeservices:modify-outgoing-response.add-header>
                 <name>%(PMUSER_HEADER_NAME)</name>
-                <value>%(PMUSER_HEADER_VALUE)</value>
+                <value>%(PMUSER_HEADER_VALUE)%(PMUSER_MODIFY_OUTGOING_ENC)</value>
                 <status>on</status>
                 <edge-only>off</edge-only>
             </edgeservices:modify-outgoing-response.add-header>
@@ -17,7 +43,7 @@
     <match:variable name="PMUSER_HTTP_SET_COOKIE_VALUE" value="?*" value-wildcard="on">
         <edgeservices:modify-outgoing-response.add-header>
             <name>Set-Cookie</name>
-            <value>%(PMUSER_HTTP_SET_COOKIE_VALUE)</value>
+            <value>%(PMUSER_HTTP_SET_COOKIE_VALUE)%(PMUSER_MODIFY_OUTGOING_ENC)</value>
             <status>on</status>
             <edge-only>off</edge-only>
         </edgeservices:modify-outgoing-response.add-header>
@@ -30,7 +56,7 @@
         </edgeservices:modify-outgoing-response.remove-header>
         <edgeservices:modify-outgoing-response.add-header>
             <name>Location</name>
-            <value>%(PMUSER_HTTP_LOCATION)</value>
+            <value>%(PMUSER_HTTP_LOCATION)%(PMUSER_MODIFY_OUTGOING_ENC)</value>
             <status>on</status>
             <edge-only>off</edge-only>
         </edgeservices:modify-outgoing-response.add-header>
@@ -43,7 +69,7 @@
         </edgeservices:modify-outgoing-response.remove-header>
         <edgeservices:modify-outgoing-response.add-header>
             <name>Surrogate-Location</name>
-            <value>%(PMUSER_SURROGATE_LOCATION)</value>
+            <value>%(PMUSER_SURROGATE_LOCATION)%(PMUSER_MODIFY_OUTGOING_ENC)</value>
             <status>on</status>
             <edge-only>off</edge-only>
         </edgeservices:modify-outgoing-response.add-header>
