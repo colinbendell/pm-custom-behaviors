@@ -1,0 +1,14 @@
+<match:metadata-stage value="client-request cache-hit forward-response client-response">
+    <match:variable name="PMUSER_POSITIVE_STATUS" value="?*" value-wildcard="on" result="false">
+        <cache:additional-status-codes>
+            <status>on</status>
+            <positive>400 404</positive>
+        </cache:additional-status-codes>
+    </match:variable>
+    <match:variable name="PMUSER_POSITIVE_STATUS" value="?*" value-wildcard="on">
+        <cache:additional-status-codes>
+            <status>on</status>
+            <positive>%(PMUSER_POSITIVE_STATUS)</positive>
+        </cache:additional-status-codes>
+    </match:variable>
+</match:metadata-stage>
