@@ -1,0 +1,45 @@
+<match:metadata-stage value="client-request cache-hit ipa-response forward-request forward-response client-response">
+    <!-- this is a hack to ensure that the variable gets set anytime it is called and the set-variable isn't optimized out -->
+    <match:metadata-stage value="client-request">
+        <assign:variable>
+            <name>PMUSER_CURRENT_TIME_MS</name>
+            <value>%(AK_CURRENT_TIME_MS)</value>
+            <hidden>on</hidden>
+        </assign:variable>
+    </match:metadata-stage>
+    <match:metadata-stage value="cache-hit">
+        <assign:variable>
+            <name>PMUSER_CURRENT_TIME_MS</name>
+            <value>%(AK_CURRENT_TIME_MS)</value>
+            <hidden>on</hidden>
+        </assign:variable>
+    </match:metadata-stage>
+    <match:metadata-stage value="ipa-response">
+        <assign:variable>
+            <name>PMUSER_CURRENT_TIME_MS</name>
+            <value>%(AK_CURRENT_TIME_MS)</value>
+            <hidden>on</hidden>
+        </assign:variable>
+    </match:metadata-stage>
+    <match:metadata-stage value="forward-request">
+        <assign:variable>
+            <name>PMUSER_CURRENT_TIME_MS</name>
+            <value>%(AK_CURRENT_TIME_MS)</value>
+            <hidden>on</hidden>
+        </assign:variable>
+    </match:metadata-stage>
+    <match:metadata-stage value="forward-response">
+        <assign:variable>
+            <name>PMUSER_CURRENT_TIME_MS</name>
+            <value>%(AK_CURRENT_TIME_MS)</value>
+            <hidden>on</hidden>
+        </assign:variable>
+    </match:metadata-stage>
+    <match:metadata-stage value="client-response">
+        <assign:variable>
+            <name>PMUSER_CURRENT_TIME_MS</name>
+            <value>%(AK_CURRENT_TIME_MS)</value>
+            <hidden>on</hidden>
+        </assign:variable>
+    </match:metadata-stage>
+</match:metadata-stage>

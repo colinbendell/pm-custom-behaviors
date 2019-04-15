@@ -1,0 +1,7 @@
+<match:metadata-stage value="cache-hit forward-response client-response">
+    <assign:variable>
+        <name>PMUSER_CURRENT_AGE</name>
+        <value>%(AK_CURRENT_AGE)</value>
+        <hidden>on</hidden>
+    </assign:variable>
+</match:metadata-stage>

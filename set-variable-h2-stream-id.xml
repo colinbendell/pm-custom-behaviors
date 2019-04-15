@@ -1,0 +1,5 @@
+<assign:variable>
+    <name>PMUSER_H2_STREAM_ID</name>
+    <value>%(AK_H2_STREAM_ID)</value>
+    <hidden>on</hidden>                                                                                           
+</assign:variable>

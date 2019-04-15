@@ -1,0 +1,64 @@
+
+<match:metadata-stage value="client-response">
+	<assign:variable>
+		<name>PMUSER_CACHE_STATE</name>
+		<value>%(AK_CONTENT_SOURCE)</value>
+	</assign:variable>
+	<assign:variable>
+		<name>PMUSER_IS_CACHE_HIT</name>
+		<value>0</value>
+	</assign:variable>
+	<assign:variable>
+		<name>PMUSER_IS_CACHE_MISS</name>
+		<value>0</value>
+	</assign:variable>
+	<assign:variable>
+		<name>PMUSER_IS_NOSTORE</name>
+		<value>1</value>
+	</assign:variable>
+	<match:response.cacheability value="cacheable" result="true">
+		<assign:variable>
+			<name>PMUSER_IS_NOSTORE</name>
+			<value>0</value>
+		</assign:variable>
+		<match:variable name="PMUSER_CACHE_STATE" value="*d* *i* *m* *g* *n*" value-wildcard="on">
+			<match:variable name="PMUSER_CACHE_STATE" value="*o* *p*" value-wildcard="on" result="false">
+				<assign:variable>
+					<name>PMUSER_IS_CACHE_HIT</name>
+					<value>1</value>
+				</assign:variable>
+			</match:variable>
+		</match:variable>
+		<match:variable name="PMUSER_IS_CACHE_HIT" value="0">
+			<assign:variable>
+				<name>PMUSER_IS_CACHE_MISS</name>
+				<value>1</value>
+			</assign:variable>
+		</match:variable>
+	</match:response.cacheability>
+	<match:request.type result="false" value="CLIENT_REQ">
+		<edgeservices:modify-outgoing-response.add-header>
+			<name>X-Remote-Cache-State</name>
+			<value>%(PMUSER_CACHE_STATE)</value>
+			<status>on</status>
+			<edge-only>off</edge-only>
+		</edgeservices:modify-outgoing-response.add-header>
+	</match:request.type>
+	<match:response.header name="X-Remote-Cache-State">
+		<assign:extract-value>
+			<variable-name>PMUSER_REMOTE_CACHE_STATE</variable-name>
+			<location>Response_Header</location>
+			<location-id>X-Remote-Cache-State</location-id>
+		</assign:extract-value>
+	</match:response.header>
+	<match:request.type result="true" value="CLIENT_REQ">
+		<match:response.header name="X-Remote-Cache-State">
+			<edgeservices:modify-outgoing-response.remove-header>
+				<name>X-Remote-Cache-State</name>
+				<status>on</status>
+				<edge-only>off</edge-only>
+			</edgeservices:modify-outgoing-response.remove-header>
+		</match:response.header>
+	</match:request.type>
+
+</match:metadata-stage>

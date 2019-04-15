@@ -1,0 +1,5 @@
+ <assign:variable>                                                                                                 
+    <name>PMUSER_REQUEST_END_TIME</name>
+    <value>%(AK_CLIENT_REQUEST_END_TIME)</value>
+    <hidden>on</hidden>                                                                                           
+</assign:variable> 
