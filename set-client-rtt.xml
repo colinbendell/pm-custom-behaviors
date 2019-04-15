@@ -1,5 +1,0 @@
-<assign:variable>
-	<name>PMUSER_RTT</name>
-	<value>%(AK_CLIENT_RTT)</value>
-	<hidden>on</hidden>
-</assign:variable>

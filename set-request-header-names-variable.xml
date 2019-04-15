@@ -1,6 +1,0 @@
-<assign:extract-value>
-    <location>Client_Request_Header_Names</location>
-    <variable-name>PMUSER_REQUEST_HEADER_NAMES</variable-name>
-    <hidden>on</hidden>
-    <sensitive>off</sensitive>
-</assign:extract-value>

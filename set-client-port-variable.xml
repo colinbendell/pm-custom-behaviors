@@ -1,5 +1,0 @@
- <assign:variable>                                                                                                 
-    <name>PMUSER_CLIENT_PORT</name>                                                                               
-    <value>%(AK_TRUE_CLIENT_PORT)</value>                                                                         
-    <hidden>on</hidden>                                                                                           
-</assign:variable> 
