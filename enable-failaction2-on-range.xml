@@ -1,0 +1,3 @@
+<forward:availability.fail-action2>
+    <apply-to-range-request>on</apply-to-range-request>
+</forward:availability.fail-action2>
