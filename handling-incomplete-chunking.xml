@@ -1,0 +1,8 @@
+<!-- Default behavior is for Akamai to send zero byte chunk to indicate end of stream -->
+<match:variable name="PMUSER_INCOMPLETE_CHUNKING" value="?*" value-wildcard="on" result="false">
+    <network:http.handle-incomplete-chunking.status>on</network:http.handle-incomplete-chunking.status>
+</match:variable>
+<!-- Instructs Akamai edge to not send zero byte chunk. Non-termination of stream from origin makes it to client -->
+<match:variable name="PMUSER_INCOMPLETE_CHUNKING" value="?*" value-wildcard="on">
+    <network:http.handle-incomplete-chunking.status>off</network:http.handle-incomplete-chunking.status>
+</match:variable>
