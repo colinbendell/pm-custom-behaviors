@@ -6,7 +6,7 @@
         </network:http.handle-incomplete-chunking>
     </match:variable>
     <!-- Instructs Akamai edge to not send zero byte chunk. Non-termination of stream from origin makes it to client -->
-    <match:variable name="PMUSER_INCOMPLETE_CHUNKING_DISABLE" value="?*" value-wildcard="on">
+    <match:variable name="PMUSER_INCOMPLETE_CHUNKING" value="?*" value-wildcard="on">
         <network:http.handle-incomplete-chunking>
             <status>off</status>
         </network:http.handle-incomplete-chunking>
