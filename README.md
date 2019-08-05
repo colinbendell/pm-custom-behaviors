@@ -36,7 +36,7 @@ deleteBehavior('my_custom_behavior_v2');
 ```
 
 ## Behavior List
-* `call-ipa-auth`: Make an abritrary out-of-band Inter-Process-Agent request. Only success (200/304) response will allow the request to proceed. 
+* `call-ipa-auth`: Make an arbitrary out-of-band Inter-Process-Agent request. Only success (200/304) response will allow the request to proceed. 
 * `call-ipa-noauth`: Like above, without the auth linkage
 * `disable-buffering`: Disables ghost-to-ghost buffering and increases the probabilty of chunked streaming
 * `disable-esi-legacy-ops`: Disables legacy ESI operators. Needed for more advanced ESI use (like bitwise shifting, xor, etc) 
