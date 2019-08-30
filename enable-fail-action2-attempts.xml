@@ -1,0 +1,30 @@
+<match:metadata-stage value="client-request client-response">
+    <match:variable name="PMUSER_FAIL_ACTION_MAX" value="?*" value-wildcard="on" result="false">
+        <assign:variable>
+            <name>PMUSER_FAIL_ACTION_MAX</name>
+            <value>5</value>
+            <hidden>on</hidden>
+        </assign:variable>
+    </match:variable>
+
+    <match:variable name="PMUSER_FAIL_ACTION_MAX" value="4">
+        <forward:availability.fail-action2>
+            <max-attempts>4</max-attempts>
+        </forward:availability.fail-action2>
+    </match:variable>
+    <match:variable name="PMUSER_FAIL_ACTION_MAX" value="5">
+        <forward:availability.fail-action2>
+            <max-attempts>5</max-attempts>
+        </forward:availability.fail-action2>
+    </match:variable>
+    <match:variable name="PMUSER_FAIL_ACTION_MAX" value="6">
+        <forward:availability.fail-action2>
+            <max-attempts>6</max-attempts>
+        </forward:availability.fail-action2>
+    </match:variable>
+    <match:variable name="PMUSER_FAIL_ACTION_MAX" value="7">
+        <forward:availability.fail-action2>
+            <max-attempts>7</max-attempts>
+        </forward:availability.fail-action2>
+    </match:variable>
+</match:metadata-stage>
