@@ -1,0 +1,5 @@
+<assign:variable>
+	<name>PMUSER_HTTP_STATUS</name>
+	<value>%(AK_HTTP_STATUS)</value>
+	<hidden>on</hidden>
+</assign:variable>
