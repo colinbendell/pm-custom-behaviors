@@ -1,17 +1,17 @@
 <match:metadata-stage value="cache-hit">
-    <match:variable name="PMUSER_INVALIDATE_EPOCH" value="?*" value-wildcard="on" result="false">
-        <assign:variable>
-            <name>PMUSER_INVALIDATE_EPOCH</name>
-            <value>%(AK_CURRENT_TIME)</value>
-            <hidden>on</hidden>
-            <transform>
-                <subtract>
-                    <value>1</value>
-                </subtract>
-            </transform>
-        </assign:variable>
-    </match:variable>
     <match:variable name="PMUSER_ENABLE_CCU_REFETCH" value="?*" value-wildcard="on">
+        <match:variable name="PMUSER_INVALIDATE_EPOCH" value="?*" value-wildcard="on" result="false">
+            <assign:variable>
+                <name>PMUSER_INVALIDATE_EPOCH</name>
+                <value>%(AK_CURRENT_TIME)</value>
+                <hidden>on</hidden>
+                <transform>
+                    <subtract>
+                        <value>1</value>
+                    </subtract>
+                </transform>
+            </assign:variable>
+        </match:variable>
         <cache:ccu.refetch-old-content>
             <epoch>%(PMUSER_INVALIDATE_EPOCH)</epoch>
             <ims>off</ims>
