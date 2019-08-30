@@ -1,0 +1,14 @@
+<match:metadata-stage value="client-done">
+    <match:variable name="PMUSER_EC_CUSTOM_OVERRIDE" value="?*" value-wildcard="on">
+        <assign:variable>
+            <name>P_ENT_EDGECONNECT_FORMAT_OVERRIDE</name>
+            <value>%(PMUSER_EC_CUSTOM_OVERRIDE)</value>
+        </assign:variable>
+    </match:variable>
+    <match:variable name="PMUSER_EC_CUSTOM" value="?*" value-wildcard="on">
+        <assign:variable>
+            <name>ENT_EDGECONNECT_DATA_CUSTOM_FORMAT</name>
+            <value>%(PMUSER_EC_CUSTOM)</value>
+        </assign:variable>
+    </match:variable>
+</match:metadata-stage>
