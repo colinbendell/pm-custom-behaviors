@@ -1,6 +1,7 @@
 <auth:browser.token>
     <hmac-algo>SHA256</hmac-algo>
     <escape-hmac-inputs>on</escape-hmac-inputs>
+    <allow-multistage>on</allow-multistage>
     <verify>
         <key>%(PMUSER_TOKENKEY)</key>
         <url>%(PMUSER_AUTH_PATH)</url>
