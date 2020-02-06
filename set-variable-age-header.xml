@@ -1,8 +1,0 @@
-<match:metadata-stage value="cache-hit forward-response">
-	<assign:extract-value>
-		<variable-name>PMUSER_AGE</variable-name>
-		<location>Response_Header</location>
-		<location-id>Age</location-id>
-		<hidden>on</hidden>
-	</assign:extract-value>
-</match:metadata-stage>

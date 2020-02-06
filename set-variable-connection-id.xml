@@ -1,0 +1,5 @@
+<assign:variable>
+    <name>PMUSER_CLIENT_CONN_ID</name>
+    <value>%(AK_CLIENT_CONNECTION_ID)</value>
+    <hidden>on</hidden>                                                                                           
+</assign:variable>
