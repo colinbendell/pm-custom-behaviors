@@ -1,0 +1,6 @@
+<match:variable name="PMUSER_QUERY_STRING_FILTER" value="?*" value-wildcard="on">
+    <reporting:log.query-string-filter>
+          <status>on</status>
+          <exclude-keys>%(PMUSER_QUERY_STRING_FILTER)</exclude-keys>
+    </reporting:log.query-string-filter>
+</match:variable>
