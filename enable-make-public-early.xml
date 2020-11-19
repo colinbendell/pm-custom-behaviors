@@ -1,0 +1,2 @@
+<cache:make-public-early>on</cache:make-public-early>
+<cache:set-timestamp-on-error-response-storeentry>on</cache:set-timestamp-on-error-response-storeentry>
